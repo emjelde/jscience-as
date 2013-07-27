@@ -26,6 +26,14 @@
         <configuration>
          <optimize>true</optimize>
         </configuration>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>sources</goal>
+            </goals>
+          </execution>
+        </executions>
         <dependencies>
           <dependency>
             <groupId>com.adobe.flex</groupId>
