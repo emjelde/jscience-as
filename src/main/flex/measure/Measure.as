@@ -10,8 +10,6 @@ package measure {
    import measure.unit.CompoundUnit;
    import measure.unit.Unit;
    
-   import flashx.textLayout.formats.Float;
-   
    import mx.utils.ObjectUtil;
    
    [Abstract]
@@ -29,6 +27,7 @@ package measure {
        * Default constructor.
        */
       public function Measure() {
+         super();
       }
       
       /**
