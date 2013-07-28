@@ -43,12 +43,17 @@ package measure {
       }
       
       /**
-       * Returns the measurement value of this measure.
-       *    
-       * @return the measurement value.
+       * Returns the value of this measure stated in the specified unit as 
+       * a <code>Number</code>. If the measure has too great a magnitude to 
+       * be represented as a <code>Number</code>, it will be converted to 
+       * <code>Double.NEGATIVE_INFINITY</code> or
+       * <code>Double.POSITIVE_INFINITY</code> as appropriate.
+       * 
+       * @param unit the unit in which this measure is stated.
+       * @return the numeric value after conversion.
        */
       [Abstract]
-      public function getValue():Number {
+      public function getValue(unit:Unit=null):Number {
          return NaN;
       }
       
@@ -76,21 +81,6 @@ package measure {
       }
       
       /**
-       * Returns the value of this measure stated in the specified unit as 
-       * a <code>double</code>. If the measure has too great a magnitude to 
-       * be represented as a <code>double</code>, it will be converted to 
-       * <code>Double.NEGATIVE_INFINITY</code> or
-       * <code>Double.POSITIVE_INFINITY</code> as appropriate.
-       * 
-       * @param unit the unit in which this measure is stated.
-       * @return the numeric value after conversion to type <code>double</code>.
-       */
-      [Abstract]
-      public function value(unit:Unit):Number {
-         return NaN;
-      }
-      
-      /**
        * Returns the estimated integral value of this measure stated in 
        * the specified unit as a <code>int</code>. 
        * 
@@ -105,7 +95,7 @@ package measure {
        *               number in the specified unit.
        */
       public function intValue(unit:Unit):int {
-         var numberValue:Number = value(unit);
+         var numberValue:Number = getValue(unit);
          if ((numberValue > int.MAX_VALUE) || (numberValue < int.MIN_VALUE)) {
             throw new Error("Overflow");
          }
@@ -148,7 +138,7 @@ package measure {
       
       /**
        * Compares this measure to the specified measurable quantity.
-       * This method compares the <code>Measurable.value(Unit)</code> of 
+       * This method compares the <code>Measurable.getValue(Unit)</code> of 
        * both this measure and the specified measurable stated in the 
        * same unit (this measure's unit).
        * 
@@ -157,7 +147,7 @@ package measure {
        *         quantity.
        */
       public function compareTo(that:Measurable):int {
-         return ObjectUtil.compare(this.value(getUnit()), that.value(getUnit()));
+         return ObjectUtil.compare(this.getValue(getUnit()), that.getValue(getUnit()));
       }
    }
 }
@@ -173,29 +163,30 @@ final class MeasureNumber extends Measure {
    private var _unit:Unit;
    
    public function MeasureNumber(value:Number, unit:Unit) {
+      super();
       _value = value;
       _unit = unit;
+   }
+   
+   override public function getValue(unit:Unit=null):Number {
+      var value:Number;
+      if (!unit || (unit == _unit) || (unit.equals(_unit))) {
+         value = _value;
+      }
+      else {
+         value = _unit.getConverterTo(unit).convert(_value);
+      }
+      return value;
    }
    
    override public function getUnit():Unit {
       return _unit;
    }
    
-   override public function getValue():Number {
-      return _value;
-   }
-   
    override public function to(unit:Unit):Measure {
       if ((unit == _unit) || (unit.equals(_unit))) {
          return this;
       }
-      return new MeasureNumber(value(unit), unit);
-   }
-   
-   override public function value(unit:Unit):Number {
-      if ((unit == _unit) || (unit.equals(_unit))) {
-         return _value;
-      }
-      return _unit.getConverterTo(unit).convert(_value);
+      return new MeasureNumber(getValue(unit), unit);
    }
 }
