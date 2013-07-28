@@ -620,8 +620,12 @@ package measure.unit {
       /**
        * A unit of volume equal to one cubic inch (<code>in³</code>).
        */
-      public static const CUBIC_INCH:Unit = nonSI(
-         INCH.pow(3));
+      public static const CUBIC_INCH:Unit = nonSI(INCH.pow(3));
+      
+      /**
+       * A unit of volume equal to one cubic foot (<code>ft³</code>).
+       */
+      public static const CUBIC_FOOT:Unit = nonSI(FOOT.pow(3));
       
       /**
        * A unit of volume equal to one US gallon, Liquid Unit. The U.S. liquid
@@ -654,6 +658,17 @@ package measure.unit {
        * (standard name <code>oz_fl_uk</code>).
        */
       public static const OUNCE_LIQUID_UK:Unit = nonSI(GALLON_UK.divide(160));
+
+      /**
+       * A unit of volume equal to <code>40 CUBIC_FOOT</code>.
+       * (standard name <code>measurement_ton</code>).
+       */
+      public static const MEASUREMENT_TON:Unit = nonSI(CUBIC_FOOT.times(40))
+
+      /**
+       * Equivalent to <code>MEASUREMENT_TON</code>.
+       */
+      public static const FREIGHT_TON:Unit = MEASUREMENT_TON;
       
       ///////////////
       // Viscosity //
