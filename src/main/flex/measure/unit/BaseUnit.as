@@ -8,7 +8,7 @@
  */
 package measure.unit {
    import measure.converter.UnitConverter;
-    
+
    /**
     * <p>This class represent the building blocks on top of which all other
     *    units are created. Base units are typically dimensionally independent.
@@ -23,27 +23,25 @@ package measure.unit {
     */
    public class BaseUnit extends Unit {
       private var _symbol:String;
-      
+
       public function BaseUnit(symbol:String) {
          super();
          _symbol = symbol;
-         // Checks if the symbol is associated to a different unit.
-         //            synchronized (Unit.SYMBOL_TO_UNIT) {
-         //                Unit<?> unit = Unit.SYMBOL_TO_UNIT.get(symbol);
-         //                if (unit == null) {
-         //                    Unit.SYMBOL_TO_UNIT.put(symbol, this);
-         //                    return;
-         //                }
-         //                if (!(unit instanceof BaseUnit)) 
-         //                   throw new IllegalArgumentException("Symbol " + symbol
-         //                        + " is associated to a different unit");
-         //            }
+         //Checks if the symbol is associated to a different unit.
+         var unit:Unit = Unit.SYMBOL_TO_UNIT[symbol];
+         if (!unit) {
+            Unit.SYMBOL_TO_UNIT[symbol] = this;
+            return;
+         }
+         if (!(unit is BaseUnit)) {
+            throw new Error("Symbol " + symbol + " is associated to a different unit");
+         }
       }
-      
+
       final public function get symbol():String {
          return _symbol;
       }
-      
+
       override public function equals(that:Object):Boolean {
          if (this == that) {
             return true;
@@ -54,11 +52,11 @@ package measure.unit {
          var thatUnit:BaseUnit = (that as BaseUnit);
          return symbol == thatUnit.symbol;
       }
-      
+
       override public function get standardUnit():Unit {
          return this;
       }
-      
+
       override public function toStandardUnit():UnitConverter {
          return UnitConverter.IDENTITY;
       }
