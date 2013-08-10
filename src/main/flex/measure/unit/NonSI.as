@@ -246,6 +246,18 @@ package measure.unit {
       //////////
       
       /**
+       * A unit of mass equal to 1/12 the mass of the carbon-12 atom
+       * (standard name <code>u</code>).
+       */
+      public static const ATOMIC_MASS:Unit = nonSI(SI.KILOGRAM.times(1e-3 / AVOGADRO_CONSTANT));
+      
+      /**
+       * A unit of mass equal to the mass of the electron
+       * (standard name <code>me</code>).
+       */
+      public static const ELECTRON_MASS:Unit = nonSI(SI.KILOGRAM.times(9.10938188e-31));
+      
+      /**
        * A unit of mass equal to <code>453.59237 grams</code> (avoirdupois pound,
        * standard name <code>lb</code>).
        */
