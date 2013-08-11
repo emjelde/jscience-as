@@ -34,13 +34,13 @@ package measure {
       /**
        * Returns the value of this measurable stated in the specified unit as 
        * a <code>Number</code>. If the measurable has too great a magnitude to 
-       * be represented as a <code>double</code>, it will be converted to 
+       * be represented as a <code>Number</code>, it will be converted to 
        * <code>Number.NEGATIVE_INFINITY</code> or
        * <code>Number.POSITIVE_INFINITY</code> as appropriate.
        * 
        * @param unit the unit in which this measurable value is stated.
        * @return the numeric value after conversion to type <code>Number</code>.
        */
-      function value(unit:Unit):Number;
+      function getValue(unit:Unit=null):Number;
    }
 }

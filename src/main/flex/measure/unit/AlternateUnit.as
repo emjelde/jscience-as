@@ -40,8 +40,9 @@ package measure.unit {
        */
       public function AlternateUnit(symbol:String, parent:Unit) {
          super();
-         if (!parent.isStandardUnit)
+         if (!parent.isStandardUnit) {
             throw new Error(this + " is not a standard unit");
+         }
          _symbol = symbol;
          _parent = parent;
          // Checks if the symbol is associated to a different unit.
