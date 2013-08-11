@@ -71,8 +71,7 @@ package measure.converter {
       }
       
       private static function valueOf(factor:Number):UnitConverter {
-         var asFloat:Number = parseFloat(factor.toString());
-         return asFloat == 1.0 ? UnitConverter.IDENTITY : new MultiplyConverter(factor);
+         return factor == 1.0 ? UnitConverter.IDENTITY : new MultiplyConverter(factor);
       }
    }
 }
