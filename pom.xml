@@ -25,6 +25,9 @@
         <extensions>true</extensions>
         <configuration>
          <optimize>true</optimize>
+         <themes>
+            <theme>${settings.localRepository}/com/adobe/flex/framework/framework/${flex.version}/configs_zip/themes/Spark/spark.css</theme>
+         </themes>
         </configuration>
         <executions>
           <execution>
