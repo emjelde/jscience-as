@@ -7,13 +7,14 @@
  * freely granted, provided that this notice is preserved.
  */
 package measure.unit {
+   import flash.utils.getQualifiedClassName;
+   
    import measure.converter.AddConverter;
    import measure.converter.ConversionError;
    import measure.converter.MultiplyConverter;
    import measure.converter.RationalConverter;
    import measure.converter.UnitConverter;
-   
-   import flash.utils.getQualifiedClassName;
+   import measure.parse.ParsePosition;
    
    [Abstract]
    
@@ -415,7 +416,7 @@ package measure.unit {
        * @throws Error if the specified character sequence cannot be correctly parsed (e.g. symbol unknown).
        */
       public static function valueOf(unit:String):Unit {
-         throw new Error("Not yet implemented!");
+         return UnitFormat.getInstance().parseProductUnit(unit, new ParsePosition(0));
       }
 
       /**
@@ -423,7 +424,7 @@ package measure.unit {
        * This representation is not affected by locale.
        */
       final public function toString():String {
-         throw new Error("Not yet implemented!");
+         return UnitFormat.getInstance().format(this, "");
       }
    }
 }

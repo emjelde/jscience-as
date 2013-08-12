@@ -29,12 +29,28 @@ package measure.unit {
       /**
        * Holds the standard unit format.
        */
-      protected static const DEFAULT:DefaultFormat = new DefaultFormat();
+      private static var _DEFAULT:DefaultFormat;
+      
+      protected static function get DEFAULT():DefaultFormat {
+         if (!_DEFAULT) {
+            _DEFAULT = new DefaultFormat();
+            _DEFAULT.init();
+         }
+         return _DEFAULT;
+      }
 
       /**
        * Holds the ASCIIFormat unit format.
        */
-      private static const ASCII:ASCIIFormat = new ASCIIFormat();
+      private static var _ASCII:ASCIIFormat;
+      
+      private static function get ASCII():ASCIIFormat {
+         if (!_ASCII) {
+            _ASCII = new ASCIIFormat();
+            _ASCII.init();
+         }
+         return _ASCII;
+      }
 
       /**
        * Returns the unit format.
@@ -246,11 +262,9 @@ package measure.unit {
             DEFAULT.alias(SI.CELSIUS.transform(CONVERTERS[i]), PREFIXES[i] + "°C");
             ASCII.label(SI.CELSIUS.transform(CONVERTERS[i]), asciiPrefix(PREFIXES[i]) + "Celsius");
          }
-      }
-
-      ////////////////////////////////////////////////////////////////////////
-      // To be moved in resource bundle in future release (locale dependent). 
-      {
+         
+         ////////////////////////////////////////////////////////////////////////
+         // To be moved in resource bundle in future release (locale dependent).
          DEFAULT.label(NonSI.PERCENT, "%");
          DEFAULT.label(NonSI.DECIBEL, "dB");
          DEFAULT.label(NonSI.G, "grav");
@@ -341,8 +355,8 @@ package measure.unit {
          DEFAULT.label(NonSI.ROENTGEN, "Roentgen");
 // TODO
 //         if (Locale.getDefault().getCountry().equals("GB")) {
-//             DEFAULT.label(NonSI.GALLON_UK, "gal");
-//             DEFAULT.label(NonSI.OUNCE_LIQUID_UK, "oz");
+//            DEFAULT.label(NonSI.GALLON_UK, "gal");
+//            DEFAULT.label(NonSI.OUNCE_LIQUID_UK, "oz");
 //         }
       }
    }
@@ -373,7 +387,7 @@ class DefaultFormat extends UnitFormat {
     * Constructor.
     */
    public function DefaultFormat() {
-      init();
+      super();
    }
 
    /**
@@ -398,7 +412,7 @@ class DefaultFormat extends UnitFormat {
       if (!isValidIdentifier(alias)) {
          throw new Error("Alias: " + alias + " is not a valid identifier.");
       }
-      _nameToUnit.put[alias] = unit;
+      _nameToUnit[alias] = unit;
    }
 
    override public function isValidIdentifier(name:String):Boolean {
@@ -406,7 +420,7 @@ class DefaultFormat extends UnitFormat {
          return false;
       }
       for (var i:int = 0; i < name.length; i++) {
-         if (!isUnitIdentifierPart(name[i])) {
+         if (!isUnitIdentifierPart(name.charAt(i))) {
             return false;
          }
       }
@@ -417,7 +431,7 @@ class DefaultFormat extends UnitFormat {
    public function nameFor(unit:Unit):String {
       // Searches label database.
       var label:String = _unitToName[unit];
-      if (!label) {
+      if (label) {
          return label;
       }
       if (unit is BaseUnit) {
@@ -475,7 +489,7 @@ class DefaultFormat extends UnitFormat {
    // Returns the unit for the specified name.
    public function unitFor(name:String):Unit {
       var unit:Unit = _nameToUnit[name];
-      if (!unit) {
+      if (unit) {
          return unit;
       }
       unit = Unit.SYMBOL_TO_UNIT[name];
@@ -490,7 +504,7 @@ class DefaultFormat extends UnitFormat {
       var name:String = readIdentifier(value, pos);
       var unit:Unit = unitFor(name);
       check(unit != null, name + " not recognized", value, startIndex);
-      return unit;          
+      return unit;
    }
 
    override public function parseProductUnit(value:String, pos:ParsePosition):Unit {
@@ -779,7 +793,7 @@ class DefaultFormat extends UnitFormat {
 
    override public function format(unit:Unit, appendable:String):String {
       var name:String = nameFor(unit);
-      if (name != null) {
+      if (name) {
          appendable = appendable.concat(name);
          return appendable;
       }
@@ -863,7 +877,7 @@ class DefaultFormat extends UnitFormat {
       return appendable;
    }
 
-   internal function isUnitIdentifierPart(ch:String):Boolean {
+   protected function isUnitIdentifierPart(ch:String):Boolean {
       return isLetter(ch) ||
          (!isWhitespace(ch) && !isDigit(ch)
           && (ch != "·") && (ch != "*") && (ch != "/")
