@@ -1,7 +1,7 @@
 package measure {
    import measure.parse.ParsePosition;
 
-   public interface NumberFormat {
+   public interface INumberFormat {
       /**
        * Formats a number.
        */

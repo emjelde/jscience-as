@@ -35,7 +35,7 @@ package measure {
        * @param unitFormat the unit format.
        * @return the corresponding format.
        */
-      public static function getInstance(numberFormat:NumberFormat=null, unitFormat:UnitFormat=null):MeasureFormat {
+      public static function getInstance(numberFormat:INumberFormat=null, unitFormat:UnitFormat=null):MeasureFormat {
          if (numberFormat && unitFormat) {
             var measureFormat:MeasureFormat = new NumberUnit(numberFormat, unitFormat);
          }
@@ -62,7 +62,7 @@ import flash.globalization.NumberFormatter;
 
 import measure.Measure;
 import measure.MeasureFormat;
-import measure.NumberFormat;
+import measure.INumberFormat;
 import measure.parse.FieldPosition;
 import measure.parse.ParsePosition;
 import measure.unit.CompoundUnit;
@@ -70,10 +70,10 @@ import measure.unit.Unit;
 import measure.unit.UnitFormat;
 
 final class NumberUnit extends MeasureFormat {
-   private var _numberFormat:NumberFormat;
+   private var _numberFormat:INumberFormat;
    private var _unitFormat:UnitFormat;
    
-   public function NumberUnit(numberFormat:NumberFormat=null, unitFormat:UnitFormat=null) {
+   public function NumberUnit(numberFormat:INumberFormat=null, unitFormat:UnitFormat=null) {
       super();
       _numberFormat = numberFormat;
       _unitFormat = unitFormat;
@@ -163,7 +163,7 @@ final class NumberUnit extends MeasureFormat {
    }
 }
 
-final class NumberFormatImpl implements NumberFormat {
+final class NumberFormatImpl implements INumberFormat {
    private var _delegate:NumberFormatter = new NumberFormatter(LocaleID.DEFAULT);
 
    public function NumberFormatImpl() {
