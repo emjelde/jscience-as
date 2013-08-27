@@ -8,6 +8,7 @@
  */
 package measure.unit {
    import measure.converter.LogConverter;
+   import measure.converter.MultiplyConverter;
    import measure.converter.RationalConverter;
 
    /**
@@ -708,7 +709,75 @@ package measure.unit {
        * (standard name <code>Roentgen</code>).
        */
       public static const ROENTGEN:Unit = nonSI(SI.COULOMB.divide(SI.KILOGRAM).times(2.58e-4));
-      
+
+      //////////////////
+      // IEC PREFIXES //
+      //////////////////
+
+      /**
+       * Returns the specified unit multiplied by the factor
+       * <code>1024<sup>1</sup></code>
+       */
+      public static function KIBI(unit:Unit):Unit {
+         return unit.transform(new MultiplyConverter(1024));
+      }
+
+      /**
+       * Returns the specified unit multiplied by the factor
+       * <code>1024<sup>2</sup></code>
+       */
+      public static function MEBI(unit:Unit):Unit {
+         return unit.transform(new MultiplyConverter(1024 * 1024));
+      }
+
+      /**
+       * Returns the specified unit multiplied by the factor
+       * <code>1024<sup>3</sup></code>
+       */
+      public static function GIBI(unit:Unit):Unit {
+         return unit.transform(new MultiplyConverter(1024 * 1024 * 1024));
+      }
+
+      /**
+       * Returns the specified unit multiplied by the factor
+       * <code>1024<sup>4</sup></code>
+       */
+      public static function TEBI(unit:Unit):Unit {
+         return unit.transform(new MultiplyConverter(1024 * 1024 * 1024 * 1024));
+      }
+
+      /**
+       * Returns the specified unit multiplied by the factor
+       * <code>1024<sup>5</sup></code>
+       */
+      public static function PEBI(unit:Unit):Unit {
+         return unit.transform(new MultiplyConverter(1024 * 1024 * 1024 * 1024 * 1024));
+      }
+
+      /**
+       * Returns the specified unit multiplied by the factor
+       * <code>1024<sup>6</sup></code>
+       */
+      public static function EXBI(unit:Unit):Unit {
+         return unit.transform(new MultiplyConverter(1024 * 1024 * 1024 * 1024 * 1024 * 1024));
+      }
+
+      /**
+       * Returns the specified unit multiplied by the factor
+       * <code>1024<sup>7</sup></code>
+       */
+      public static function ZEBI(unit:Unit):Unit {
+         return unit.transform(new MultiplyConverter(1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024));
+      }
+
+      /**
+       * Returns the specified unit multiplied by the factor
+       * <code>1024<sup>8</sup></code>
+       */
+      public static function YOBI(unit:Unit):Unit {
+         return unit.transform(new MultiplyConverter(1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024));
+      }
+ 
       /////////////////////
       // Collection View //
       /////////////////////
