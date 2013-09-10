@@ -41,12 +41,12 @@ package measure.unit {
        * @param parentUnit the untransformed unit from which this unit is 
        *        derived.
        * @param  toParentUnit the converter to the parent units.
-       * @throws Error if <code>toParentUnit == UnitConverter.IDENTITY</code>
+       * @throws ArgumentError if <code>toParentUnit == UnitConverter.IDENTITY</code>
        */
       public function TransformedUnit(parentUnit:Unit, toParentUnit:UnitConverter) {
          super();
          if (toParentUnit == UnitConverter.IDENTITY) {
-            throw new Error("Identity not allowed");
+            throw new ArgumentError("Identity not allowed");
          }
          _parentUnit = parentUnit;
          _toParentUnit = toParentUnit;

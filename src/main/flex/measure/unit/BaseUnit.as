@@ -34,7 +34,7 @@ package measure.unit {
             return;
          }
          if (!(unit is BaseUnit)) {
-            throw new Error("Symbol " + symbol + " is associated to a different unit");
+            throw new ArgumentError("Symbol " + symbol + " is associated to a different unit");
          }
       }
 

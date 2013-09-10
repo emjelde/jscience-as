@@ -35,10 +35,10 @@ package measure.converter {
       public function RationalConverter(dividend:Number, divisor:Number) {
          super();
          if (divisor < 0) {
-            throw new Error("Negative divisor");
+            throw new ArgumentError("Negative divisor");
          }
          if (dividend == divisor) { 
-            throw new Error("Identity converter not allowed");
+            throw new ArgumentError("Identity converter not allowed");
          }
          _dividend = dividend;
          _divisor = divisor;

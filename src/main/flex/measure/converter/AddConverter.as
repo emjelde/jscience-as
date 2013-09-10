@@ -25,7 +25,7 @@ package measure.converter {
        */
       public function AddConverter(offset:Number) {
          if (isNaN(offset) || offset == 0.0) {
-            throw new Error("Identity converter not allowed");
+            throw new ArgumentError("Identity converter not allowed");
          }
          _offset = offset;
       }

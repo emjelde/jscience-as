@@ -34,12 +34,12 @@ package measure.unit {
        *
        * @param high the high unit.
        * @param low the lower unit(s)
-       * @throws Error if both units do not the same system unit.
+       * @throws ArgumentError if both units do not the same system unit.
        */
       public function CompoundUnit(high:Unit, low:Unit) {
          super();
          if (!high.standardUnit.equals(low.standardUnit)) {
-            throw new Error("Both units do not have the same system unit");
+            throw new ArgumentError("Both units do not have the same system unit");
          }
          _high = high;
          _low = low;

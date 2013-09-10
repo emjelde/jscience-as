@@ -374,7 +374,7 @@ package measure.unit {
             return ProductUnit.getRootInstance(this, n);
          }
          else if (n == 0) {
-            throw new Error("Root's order of zero");
+            throw new ArgumentError("Root's order of zero");
          }
          else { // n < 0
             return ONE.divide(this.root(-n));

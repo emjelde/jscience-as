@@ -41,7 +41,7 @@ package measure.unit {
       public function AlternateUnit(symbol:String, parent:Unit) {
          super();
          if (!parent.isStandardUnit) {
-            throw new Error(this + " is not a standard unit");
+            throw new ArgumentError(this + " is not a standard unit");
          }
          _symbol = symbol;
          _parent = parent;
@@ -57,7 +57,7 @@ package measure.unit {
                return; // OK, same unit.
             }
          }
-         throw new Error("Symbol " + symbol + " is associated to a different unit");
+         throw new ArgumentError("Symbol " + symbol + " is associated to a different unit");
       }
       
       /**

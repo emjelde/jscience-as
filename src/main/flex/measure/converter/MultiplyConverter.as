@@ -27,7 +27,7 @@ package measure.converter {
       public function MultiplyConverter(factor:Number) {
          super();
          if (factor == 1.0) {
-            throw new Error("Identity converter not allowed");
+            throw new ArgumentError("Identity converter not allowed");
          }
          _factor = factor;
       }

@@ -91,13 +91,13 @@ package measure {
        * 
        * @param unit the unit in which the measurable value is stated.
        * @return the numeric value after conversion to type <code>int</code>.
-       * @throws Error if this quantity cannot be represented as a <code>int</code>
-       *               number in the specified unit.
+       * @throws ArgumentError if this quantity cannot be represented as a <code>int</code>
+       *         number in the specified unit.
        */
       public function intValue(unit:Unit):int {
          var numberValue:Number = getValue(unit);
          if ((numberValue > int.MAX_VALUE) || (numberValue < int.MIN_VALUE)) {
-            throw new Error("Overflow");
+            throw new ArgumentError("Overflow");
          }
          return int(numberValue);
       }
