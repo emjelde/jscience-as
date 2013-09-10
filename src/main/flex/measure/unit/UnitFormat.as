@@ -11,6 +11,7 @@ package measure.unit {
    import measure.converter.MultiplyConverter;
    import measure.converter.RationalConverter;
    import measure.converter.UnitConverter;
+   import measure.parse.Appendable;
    import measure.parse.ParsePosition;
 
    [Abstract]
@@ -23,7 +24,7 @@ package measure.unit {
     *  Non SI units are directly recognized. For example:<code>
     *    Unit.valueOf("m°C").equals(SI.MILLI(SI.CELSIUS))
     *    Unit.valueOf("kW").equals(SI.KILO(SI.WATT))
-    *    Unit.valueOf("ft").equals(SI.METER.multiply(0.3048))</code></p>
+    *    Unit.valueOf("ft").equals(SI.METER.times(0.3048))</code></p>
     */
    public class UnitFormat {
       /**
@@ -86,7 +87,7 @@ package measure.unit {
        * @param appendable the appendable destination.
        */
       [Abstract]
-      public function format(unit:Unit, appendable:String):String {
+      public function format(unit:Unit, appendable:Appendable=null):Appendable {
          return appendable;
       }
 
@@ -141,10 +142,10 @@ package measure.unit {
        * be attached to the same unit. Aliases are used during parsing to
        * recognize different variants of the same unit. For example:
        * <code>
-       *   UnitFormat.getLocaleInstance().alias(METER.multiply(0.3048), "foot");
-       *   UnitFormat.getLocaleInstance().alias(METER.multiply(0.3048), "feet");
-       *   UnitFormat.getLocaleInstance().alias(METER, "meter");
-       *   UnitFormat.getLocaleInstance().alias(METER, "metre");
+       *   UnitFormat.getInstance().alias(METER.multiply(0.3048), "foot");
+       *   UnitFormat.getInstance().alias(METER.multiply(0.3048), "feet");
+       *   UnitFormat.getInstance().alias(METER, "meter");
+       *   UnitFormat.getInstance().alias(METER, "metre");
        * </code>
        *
        * <p>If the specified label is already associated to an unit the previous 
@@ -152,7 +153,7 @@ package measure.unit {
        *
        * @param unit the unit being aliased.
        * @param alias the alias attached to this unit.
-       * @throws Error if the label is not a <code>isValidIdentifier(String)</code>
+       * @throws ArgumentError if the label is not a <code>isValidIdentifier(String)</code>
        *      valid identifier.
        */
       [Abstract]
@@ -201,12 +202,12 @@ package measure.unit {
          SI.METRE, SI.MOLE, SI.NEWTON, SI.OHM, SI.PASCAL, SI.RADIAN,
          SI.SECOND, SI.SIEMENS, SI.SIEVERT, SI.STERADIAN, SI.TESLA, SI.VOLT,
          SI.WATT, SI.WEBER
-            ];
+      ];
 
       private static const PREFIXES:Array = [
          "Y", "Z", "E", "P", "T", "G", "M", "k", "h",
          "da", "d", "c", "m", "µ", "n", "p", "f", "a", "z", "y"
-            ];
+      ];
 
       private static const CONVERTERS:Array = [
          SI.E24, SI.E21, SI.E18, SI.E15, SI.E12, SI.E9, SI.E6, SI.E3, SI.E2, SI.E1, SI.Em1,
@@ -366,6 +367,7 @@ import measure.converter.AddConverter;
 import measure.converter.MultiplyConverter;
 import measure.converter.RationalConverter;
 import measure.converter.UnitConverter;
+import measure.parse.Appendable;
 import measure.parse.ParsePosition;
 import measure.unit.AlternateUnit;
 import measure.unit.BaseUnit;
@@ -402,7 +404,7 @@ class DefaultFormat extends UnitFormat {
 
    override public function label(unit:Unit, label:String):void {
       if (!isValidIdentifier(label)) {
-         throw new Error("Label: " + label + " is not a valid identifier.");
+         throw new ArgumentError("Label: " + label + " is not a valid identifier.");
       }
       _nameToUnit[label] = unit;
       _unitToName[unit] = label;
@@ -410,7 +412,7 @@ class DefaultFormat extends UnitFormat {
 
    override public function alias(unit:Unit, alias:String):void {
       if (!isValidIdentifier(alias)) {
-         throw new Error("Alias: " + alias + " is not a valid identifier.");
+         throw new ArgumentError("Alias: " + alias + " is not a valid identifier.");
       }
       _nameToUnit[alias] = unit;
    }
@@ -666,7 +668,7 @@ class DefaultFormat extends UnitFormat {
 
    private function check(expr:Boolean, message:String, value:String, index:int):void {
       if (!expr) {
-         throw new Error(message + " (in " + value + " at index " + index + ")", index);
+         throw new ArgumentError(message + " (in " + value + " at index " + index + ")", index);
       }
    }
 
@@ -791,11 +793,13 @@ class DefaultFormat extends UnitFormat {
    ////////////////////////////
    // Formatting.
 
-   override public function format(unit:Unit, appendable:String):String {
+   override public function format(unit:Unit, appendable:Appendable=null):Appendable {
+      if (!appendable) {
+         appendable = new Appendable();
+      }
       var name:String = nameFor(unit);
       if (name) {
-         appendable = appendable.concat(name);
-         return appendable;
+         return appendable.append(name);
       }
       if (!(unit is ProductUnit)) {
          throw new ArgumentError("Cannot format given Object as a Unit");
@@ -813,11 +817,11 @@ class DefaultFormat extends UnitFormat {
          pow = productUnit.getUnitPow(i);
          if (pow >= 0) {
             if (!start) {
-               appendable = appendable.concat("·"); // Separator.
+               appendable.append("·"); // Separator.
             }
             name = nameFor(productUnit.getUnit(i));
             root = productUnit.getUnitRoot(i);
-            appendable = append(appendable, name, pow, root);
+            append(appendable, name, pow, root);
             start = false;
          }
          else {
@@ -828,11 +832,11 @@ class DefaultFormat extends UnitFormat {
       // Write negative exponents.
       if (invNbr != 0) {
          if (start) {
-            appendable = appendable.concat("1"); // e.g. 1/s
+            appendable.append("1"); // e.g. 1/s
          }
-         appendable = appendable.concat("/");
+         appendable.append("/");
          if (invNbr > 1) {
-            appendable = appendable.concat("(");
+            appendable.append("(");
          }
          start = true;
          for (i = 0; i < productUnit.unitCount; i++) {
@@ -841,36 +845,36 @@ class DefaultFormat extends UnitFormat {
                name = nameFor(productUnit.getUnit(i));
                root = productUnit.getUnitRoot(i);
                if (!start) {
-                  appendable = appendable.concat("·"); // Separator.
+                  appendable.append("·"); // Separator.
                }
-               appendable = append(appendable, name, -pow, root);
+               append(appendable, name, -pow, root);
                start = false;
             }
          }
          if (invNbr > 1) {
-            appendable = appendable.concat(")");
+            appendable.append(")");
          }
       }
       return appendable;
    }
 
-   private function append(appendable:String, symbol:String, pow:int, root:int):String {
-      appendable = appendable.concat(symbol);
+   private function append(appendable:Appendable, symbol:String, pow:int, root:int):Appendable {
+      appendable.append(symbol);
       if ((pow != 1) || (root != 1)) {
          // Write exponent.
          if ((pow == 2) && (root == 1)) {
-            appendable = appendable.concat("²"); // Square
+            appendable.append("²"); // Square
          }
          else if ((pow == 3) && (root == 1)) {
-            appendable = appendable.concat("³"); // Cubic
+            appendable.append("³"); // Cubic
          }
          else {
             // Use general exponent form.
-            appendable = appendable.concat("^");
-            appendable = appendable.concat(pow.toString());
+            appendable.append("^");
+            appendable.append(pow.toString());
             if (root != 1) {
-               appendable = appendable.concat(":");
-               appendable = appendable.concat(root.toString());
+               appendable.append(":");
+               appendable.append(root.toString());
             }
          }
       }
@@ -945,11 +949,13 @@ class ASCIIFormat extends DefaultFormat {
       return DEFAULT.unitFor(name);
    }
 
-   override public function format(unit:Unit, appendable:String):String {
+   override public function format(unit:Unit, appendable:Appendable=null):Appendable {
+         if (!appendable) {
+            appendable = new Appendable();
+         }
          var name:String = nameFor(unit);
          if (name != null) {
-            appendable = appendable.concat(name);
-            return appendable;
+            return appendable.append(name);
          }
          if (!(unit is ProductUnit)) {
             throw new ArgumentError("Cannot format given Object as a Unit");
@@ -957,19 +963,19 @@ class ASCIIFormat extends DefaultFormat {
          var productUnit:ProductUnit = (unit as ProductUnit);
          for (var i:int = 0; i < productUnit.unitCount; i++) {
             if (i != 0) {
-               appendable = appendable.concat("*"); // Separator.
+               appendable.append("*"); // Separator.
             }
             name = nameFor(productUnit.getUnit(i));
             var pow:int = productUnit.getUnitPow(i);
             var root:int = productUnit.getUnitRoot(i);
-            appendable = appendable.concat(name);
+            appendable.append(name);
             if ((pow != 1) || (root != 1)) {
                // Use general exponent form.
-               appendable = appendable.concat("^");
-               appendable = appendable.concat(pow.toString());
+               appendable.append("^");
+               appendable.append(pow.toString());
                if (root != 1) {
-                  appendable = appendable.concat(":");
-                  appendable = appendable.concat(root.toString());
+                  appendable.append(":");
+                  appendable.append(root.toString());
                }
             }
          }

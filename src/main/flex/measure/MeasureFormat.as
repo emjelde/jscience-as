@@ -46,12 +46,12 @@ package measure {
       }
 
       [Abstract]
-      public function format(obj:Measure, toAppendTo:String, pos:FieldPosition):String {
+      public function format(obj:Measure, toAppendTo:String=null, pos:FieldPosition=null):String {
          return null;
       }
       
       [Abstract]
-      public function parseObject(source:String, pos:ParsePosition):Object {
+      public function parseObject(source:String, pos:ParsePosition=null):Object {
          return null;
       }
    }
@@ -63,6 +63,7 @@ import flash.globalization.NumberFormatter;
 import measure.Measure;
 import measure.MeasureFormat;
 import measure.INumberFormat;
+import measure.parse.Appendable;
 import measure.parse.FieldPosition;
 import measure.parse.ParsePosition;
 import measure.unit.CompoundUnit;
@@ -79,7 +80,13 @@ final class NumberUnit extends MeasureFormat {
       _unitFormat = unitFormat;
    }
    
-   override public function format(obj:Measure, toAppendTo:String, pos:FieldPosition):String {
+   override public function format(obj:Measure, toAppendTo:String=null, pos:FieldPosition=null):String {
+      if (toAppendTo == null) {
+         toAppendTo = "";
+      }
+      if (pos == null) {
+         pos = new FieldPosition();
+      }
       var value:Number = obj.getValue();
       var unit:Unit = obj.getUnit();
       if (unit is CompoundUnit) {
@@ -90,7 +97,11 @@ final class NumberUnit extends MeasureFormat {
       
       if (!obj.getUnit().equals(Unit.ONE)) {
          toAppendTo = toAppendTo.concat(' ');
-         toAppendTo = _unitFormat.format(unit, toAppendTo/*, pos*/);
+
+         var appendable:Appendable = new Appendable()
+            .append(toAppendTo, pos.getBeginIndex(), pos.getEndIndex()); 
+
+         toAppendTo = _unitFormat.format(unit, appendable).toString();
       }
       return toAppendTo;
    }
@@ -99,7 +110,11 @@ final class NumberUnit extends MeasureFormat {
    internal function formatCompound(value:Number, unit:Unit, toAppendTo:String, pos:FieldPosition):String {
       if (!(unit is CompoundUnit)) {
          toAppendTo = toAppendTo.concat(value);
-         return _unitFormat.format(unit, toAppendTo/*, pos*/);
+
+         var appendable:Appendable = new Appendable()
+            .append(toAppendTo, pos.getBeginIndex(), pos.getEndIndex());
+
+         return _unitFormat.format(unit, appendable).toString();
       }
       var high:Unit = (unit as CompoundUnit).higher;
       var low:Unit = (unit as CompoundUnit).lower; // The unit in which the value is stated.
@@ -110,7 +125,10 @@ final class NumberUnit extends MeasureFormat {
       return toAppendTo;
    }
    
-   override public function parseObject(source:String, pos:ParsePosition):Object {
+   override public function parseObject(source:String, pos:ParsePosition=null):Object {
+      if (pos == null) {
+         pos = new ParsePosition(0);
+      }
       var start:int = pos.getIndex();
 // TODO: See below
 //      try {
@@ -176,6 +194,7 @@ final class NumberFormatImpl implements INumberFormat {
 
    public function parse(source:String, pos:ParsePosition=null):Number {
       var number:Number = parseFloat(source);
+      // TODO: FIXME this may be a bad way to get string length of number
       pos.setIndex(pos.getIndex() + String(number).length);
       return number;
    }

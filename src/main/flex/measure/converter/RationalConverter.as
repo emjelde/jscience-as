@@ -63,9 +63,9 @@ package measure.converter {
       }
       
       override public function inverse():UnitConverter {
-         return _dividend < 0 ?
-            new RationalConverter(-_divisor, -_dividend) :
-            new RationalConverter( _divisor,  _dividend);
+         return _dividend < 0
+            ? new RationalConverter(-_divisor, -_dividend)
+            : new RationalConverter( _divisor,  _dividend);
       }
       
       override public function convert(amount:Number):Number {
@@ -93,7 +93,9 @@ package measure.converter {
       }
       
       private static function valueOf(dividend:Number, divisor:Number):UnitConverter {
-         return (dividend == 1) && (divisor == 1) ? UnitConverter.IDENTITY : new RationalConverter(dividend, divisor);
+         return (dividend == 1) && (divisor == 1)
+            ? UnitConverter.IDENTITY
+            : new RationalConverter(dividend, divisor);
       }
       
       /**
@@ -107,9 +109,7 @@ package measure.converter {
          if (n == 0) {
             return m;
          }
-         else {
-            return gcd(n, m % n);
-         }
+         return gcd(n, m % n);
       }
    }  
 }

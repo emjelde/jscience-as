@@ -416,7 +416,14 @@ package measure.unit {
        * @throws Error if the specified character sequence cannot be correctly parsed (e.g. symbol unknown).
        */
       public static function valueOf(unit:String):Unit {
-         return UnitFormat.getInstance().parseProductUnit(unit, new ParsePosition(0));
+         var ret:Unit;
+         try {
+            ret = UnitFormat.getInstance().parseProductUnit(unit, new ParsePosition(0));
+         }
+         catch (e:Error) {
+            throw new ArgumentError(e.message);
+         }
+         return ret;
       }
 
       /**
@@ -424,7 +431,7 @@ package measure.unit {
        * This representation is not affected by locale.
        */
       final public function toString():String {
-         return UnitFormat.getInstance().format(this, "");
+         return UnitFormat.getInstance().format(this).toString();
       }
    }
 }
