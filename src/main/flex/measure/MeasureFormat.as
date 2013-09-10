@@ -9,6 +9,7 @@
 package measure {
    import measure.parse.FieldPosition;
    import measure.parse.ParsePosition;
+   import measure.unit.Unit;
    import measure.unit.UnitFormat;
    
    [Abstract]
@@ -49,7 +50,15 @@ package measure {
       public function format(obj:Measure, toAppendTo:String=null, pos:FieldPosition=null):String {
          return null;
       }
-      
+
+      /**
+       * @private
+       */
+      [Abstract]
+      public function formatCompound(value:Number, unit:Unit, toAppendTo:String=null, pos:FieldPosition=null):String {
+         return null;
+      }
+
       [Abstract]
       public function parseObject(source:String, pos:ParsePosition=null):Object {
          return null;
@@ -107,7 +116,13 @@ final class NumberUnit extends MeasureFormat {
    }
    
    // Measure using Compound unit have no separators in their representation.
-   internal function formatCompound(value:Number, unit:Unit, toAppendTo:String, pos:FieldPosition):String {
+   override public function formatCompound(value:Number, unit:Unit, toAppendTo:String=null, pos:FieldPosition=null):String {
+      if (toAppendTo == null) {
+         toAppendTo = "";
+      }
+      if (pos == null) {
+         pos = new FieldPosition();
+      }
       if (!(unit is CompoundUnit)) {
          toAppendTo = toAppendTo.concat(value);
 

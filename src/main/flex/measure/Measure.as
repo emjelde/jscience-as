@@ -121,20 +121,24 @@ package measure {
             this.getValue() == (that.getValue());
       }
 
-// TODO
-//      /**
-//       * Returns the <code>String</code> representation of this measure
-//       * The string produced for a given measure is always the same;
-//       * it is not affected by locale.  This means that it can be used
-//       * as a canonical string representation for exchanging data, 
-//       * or as a key for a Hashtable, etc.  Locale-sensitive
-//       * measure formatting and parsing is handled by the {@link
-//       * MeasureFormat} class and its subclasses.
-//       * 
-//       * @return the string representation of this measure.
-//       */
-//      public function toString():String {
-//      }
+      /**
+       * Returns the <code>String</code> representation of this measure
+       * The string produced for a given measure is always the same;
+       * it is not affected by locale.  This means that it can be used
+       * as a canonical string representation for exchanging data, 
+       * or as a key for a hash table, etc.  Locale-sensitive
+       * measure formatting and parsing is handled by the
+       * <code>MeasureFormat</code> class and its subclasses.
+       * 
+       * @return the string representation of this measure.
+       */
+      public function toString():String {
+         if (getUnit() is CompoundUnit) {
+            return MeasureFormat.getInstance()
+               .formatCompound(getValue(getUnit()), getUnit()).toString();
+         }
+         return getValue() + " " + getUnit();
+      }
       
       /**
        * Compares this measure to the specified measurable quantity.
