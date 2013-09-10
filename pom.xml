@@ -3,7 +3,7 @@
   
   <groupId>org.jscience</groupId>
   <artifactId>jscience-as</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>swc</packaging>
 
   <name>jscience-as</name>
