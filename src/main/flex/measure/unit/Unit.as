@@ -7,13 +7,14 @@
  * freely granted, provided that this notice is preserved.
  */
 package measure.unit {
+   import flash.utils.getQualifiedClassName;
+   
    import measure.converter.AddConverter;
    import measure.converter.ConversionError;
    import measure.converter.MultiplyConverter;
    import measure.converter.RationalConverter;
    import measure.converter.UnitConverter;
-   
-   import flash.utils.getQualifiedClassName;
+   import measure.parse.ParsePosition;
    
    [Abstract]
    
@@ -46,7 +47,7 @@ package measure.unit {
       /**
        * Holds the unique symbols collection (base unit or alternate units).
        */
-      protected static const SYMBOL_TO_UNIT:Object = new Object();
+      public static const SYMBOL_TO_UNIT:Object = new Object();
       
       public function Unit() {
          super();
@@ -399,31 +400,38 @@ package measure.unit {
          }
       }
       
-// TODO
-//      /**
-//       * Returns a unit instance that is defined from the specified
-//       * character sequence using standard unit format.
-//       * <p>Examples of valid entries (all for meters per second squared) are:
-//       *    <code><ul>
-//       *      <li>m*s-2</li>
-//       *      <li>m/s²</li>
-//       *      <li>m·s-²</li>
-//       *      <li>m*s**-2</li>
-//       *      <li>m^+1 s^-2</li>
-//       *    </ul></code></p>
-//       *
-//       * @param unit Character sequence to parse.
-//       * @throws Error if the specified character sequence cannot be correctly parsed (e.g. symbol unknown).
-//       */
-//      public static function valueOf(unit:String):Unit {
-//      }
+      /**
+       * Returns a unit instance that is defined from the specified
+       * character sequence using standard unit format.
+       * <p>Examples of valid entries (all for meters per second squared) are:
+       *    <code><ul>
+       *      <li>m*s-2</li>
+       *      <li>m/s²</li>
+       *      <li>m·s-²</li>
+       *      <li>m*s**-2</li>
+       *      <li>m^+1 s^-2</li>
+       *    </ul></code></p>
+       *
+       * @param unit Character sequence to parse.
+       * @throws Error if the specified character sequence cannot be correctly parsed (e.g. symbol unknown).
+       */
+      public static function valueOf(unit:String):Unit {
+         var ret:Unit;
+         try {
+            ret = UnitFormat.getInstance().parseProductUnit(unit, new ParsePosition(0));
+         }
+         catch (e:Error) {
+            throw new ArgumentError(e.message);
+         }
+         return ret;
+      }
 
-// TODO
-//      /**
-//       * Returns the standard <code>String</code> representation of this unit.
-//       * This representation is not affected by locale.
-//       */
-//      final public function toString():String {
-//      }
+      /**
+       * Returns the standard <code>String</code> representation of this unit.
+       * This representation is not affected by locale.
+       */
+      final public function toString():String {
+         return UnitFormat.getInstance().format(this).toString();
+      }
    }
 }
