@@ -1,5 +1,5 @@
-JScience - Java(TM) Tools and Libraries for the Advancement of Sciences.
-Copyright (C) 2006 - JScience (http://jscience.org/)
+jscience-as - ActionScript Tools and Libraries for the Advancement of Sciences.
+Copyright (C) 2013 - Evan Mjelde (http://evan.mjel.de/)
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
