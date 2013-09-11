@@ -113,15 +113,14 @@ package measure.unit {
          return new Dimension(this._pseudoUnit.root(n));
       }
       
-// TODO
-//      /**
-//       * Returns the representation of this dimension.
-//       *
-//       * @return the representation of this dimension.
-//       */
-//      public function toString():String {
-//         return _pseudoUnit.toString();
-//      }
+      /**
+       * Returns the representation of this dimension.
+       *
+       * @return the representation of this dimension.
+       */
+      public function toString():String {
+         return _pseudoUnit.toString();
+      }
       
       /**
        * Indicates if the specified dimension is equals to the one specified.
