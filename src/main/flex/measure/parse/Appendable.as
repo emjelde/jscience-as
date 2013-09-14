@@ -16,7 +16,7 @@ package measure.parse {
       /**
        * Constructor.
        */
-      public function Appendable(init:String=null) {
+      public function Appendable(init:Object=null) {
          super();
          if (init) {
             _internal = String(init);
