@@ -30,7 +30,7 @@ package measure {
     *         ...
     *    }</pre></p>
     */
-   public interface Measurable {
+   public interface IMeasurable {
       /**
        * Returns the value of this measurable stated in the specified unit as 
        * a <code>Number</code>. If the measurable has too great a magnitude to 

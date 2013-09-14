@@ -20,9 +20,9 @@ package measure {
     * 
     * <p>There is no constraint upon the measurement value itself: scalars, 
     *    vectors, or even data sets are valid values as long as 
-    *    an aggregate magnitude can be determined (See <code>Measurable</code>).</p>
+    *    an aggregate magnitude can be determined (See <code>IMeasurable</code>).</p>
     */
-   public class Measure implements Measurable {
+   public class Measure implements IMeasurable {
       /**
        * Default constructor.
        */
@@ -142,7 +142,7 @@ package measure {
       
       /**
        * Compares this measure to the specified measurable quantity.
-       * This method compares the <code>Measurable.getValue(Unit)</code> of 
+       * This method compares the <code>IMeasurable.getValue(Unit)</code> of 
        * both this measure and the specified measurable stated in the 
        * same unit (this measure's unit).
        * 
@@ -150,7 +150,7 @@ package measure {
        *         is less than, equal to, or greater than the specified measurable
        *         quantity.
        */
-      public function compareTo(that:Measurable):int {
+      public function compareTo(that:IMeasurable):int {
          return ObjectUtil.compare(this.getValue(getUnit()), that.getValue(getUnit()));
       }
    }
