@@ -349,10 +349,10 @@ package de.mjel.measure.unit {
          DEFAULT.label(SI.CENTI(NonSI.LITRE), "cL");
          DEFAULT.label(SI.DECI(NonSI.LITRE), "dL");
          DEFAULT.label(NonSI.GALLON_LIQUID_US, "gal");
-         DEFAULT.label(NonSI.OUNCE_LIQUID_US, "oz");
+         DEFAULT.label(NonSI.OUNCE_LIQUID_US, "oz_fl");
          DEFAULT.label(NonSI.GALLON_DRY_US, "gallon_dry_us");
          DEFAULT.label(NonSI.GALLON_UK, "gallon_uk");
-         DEFAULT.label(NonSI.OUNCE_LIQUID_UK, "oz_uk");
+         DEFAULT.label(NonSI.OUNCE_LIQUID_UK, "oz_fl_uk");
          DEFAULT.label(NonSI.ROENTGEN, "Roentgen");
 // TODO
 //         if (Locale.getDefault().getCountry().equals("GB")) {
