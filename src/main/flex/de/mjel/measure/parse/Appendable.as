@@ -6,7 +6,7 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.parse {
+package de.mjel.measure.parse {
    /**
     * Appendable is a simple class to which String values can be appended.
     */

@@ -6,9 +6,9 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.unit {
-   import measure.converter.ConversionError;
-   import measure.converter.UnitConverter;
+package de.mjel.measure.unit {
+   import de.mjel.measure.converter.ConversionError;
+   import de.mjel.measure.converter.UnitConverter;
    
    /**
     * <p>This class represents units formed by the product of rational powers of
@@ -359,7 +359,7 @@ package measure.unit {
    }
 }
 
-import measure.unit.Unit;
+import de.mjel.measure.unit.Unit;
 
 /**
  * Inner product element represents a rational power of a single unit.

@@ -6,13 +6,13 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.unit {
-   import measure.converter.AddConverter;
-   import measure.converter.MultiplyConverter;
-   import measure.converter.RationalConverter;
-   import measure.converter.UnitConverter;
-   import measure.parse.Appendable;
-   import measure.parse.ParsePosition;
+package de.mjel.measure.unit {
+   import de.mjel.measure.converter.AddConverter;
+   import de.mjel.measure.converter.MultiplyConverter;
+   import de.mjel.measure.converter.RationalConverter;
+   import de.mjel.measure.converter.UnitConverter;
+   import de.mjel.measure.parse.Appendable;
+   import de.mjel.measure.parse.ParsePosition;
 
    [Abstract]
 
@@ -363,19 +363,19 @@ package measure.unit {
    }
 }
 
-import measure.converter.AddConverter;
-import measure.converter.MultiplyConverter;
-import measure.converter.RationalConverter;
-import measure.converter.UnitConverter;
-import measure.parse.Appendable;
-import measure.parse.ParsePosition;
-import measure.unit.AlternateUnit;
-import measure.unit.BaseUnit;
-import measure.unit.CompoundUnit;
-import measure.unit.ProductUnit;
-import measure.unit.TransformedUnit;
-import measure.unit.Unit;
-import measure.unit.UnitFormat;
+import de.mjel.measure.converter.AddConverter;
+import de.mjel.measure.converter.MultiplyConverter;
+import de.mjel.measure.converter.RationalConverter;
+import de.mjel.measure.converter.UnitConverter;
+import de.mjel.measure.parse.Appendable;
+import de.mjel.measure.parse.ParsePosition;
+import de.mjel.measure.unit.AlternateUnit;
+import de.mjel.measure.unit.BaseUnit;
+import de.mjel.measure.unit.CompoundUnit;
+import de.mjel.measure.unit.ProductUnit;
+import de.mjel.measure.unit.TransformedUnit;
+import de.mjel.measure.unit.Unit;
+import de.mjel.measure.unit.UnitFormat;
 
 import flash.utils.Dictionary;
 

@@ -6,7 +6,7 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.converter {
+package de.mjel.measure.converter {
    
    [Abstract]
    
@@ -115,7 +115,7 @@ package measure.converter {
    }
 }
 
-import measure.converter.UnitConverter;
+import de.mjel.measure.converter.UnitConverter;
 
 /**
  * This class represents the identity converter (singleton).

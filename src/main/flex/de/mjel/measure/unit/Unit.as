@@ -6,15 +6,15 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.unit {
+package de.mjel.measure.unit {
    import flash.utils.getQualifiedClassName;
    
-   import measure.converter.AddConverter;
-   import measure.converter.ConversionError;
-   import measure.converter.MultiplyConverter;
-   import measure.converter.RationalConverter;
-   import measure.converter.UnitConverter;
-   import measure.parse.ParsePosition;
+   import de.mjel.measure.converter.AddConverter;
+   import de.mjel.measure.converter.ConversionError;
+   import de.mjel.measure.converter.MultiplyConverter;
+   import de.mjel.measure.converter.RationalConverter;
+   import de.mjel.measure.converter.UnitConverter;
+   import de.mjel.measure.parse.ParsePosition;
    
    [Abstract]
    

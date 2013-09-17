@@ -6,7 +6,7 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.converter {
+package de.mjel.measure.converter {
    /**
     * <p>This class represents a logarithmic converter. Such converter 
     *    is typically used to create logarithmic unit. For example:<pre>
@@ -63,7 +63,7 @@ package measure.converter {
    }
 }
 
-import measure.converter.UnitConverter;
+import de.mjel.measure.converter.UnitConverter;
 
 /**
  * This class represents the inverse of the logarithmic converter

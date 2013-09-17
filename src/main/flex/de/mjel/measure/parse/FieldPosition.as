@@ -6,7 +6,7 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.parse {
+package de.mjel.measure.parse {
    /**
     * FieldPosition is a simple class to identify fields in formatted output.
     */

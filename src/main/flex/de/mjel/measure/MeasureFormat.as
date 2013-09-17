@@ -6,11 +6,11 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure {
-   import measure.parse.FieldPosition;
-   import measure.parse.ParsePosition;
-   import measure.unit.Unit;
-   import measure.unit.UnitFormat;
+package de.mjel.measure {
+   import de.mjel.measure.parse.FieldPosition;
+   import de.mjel.measure.parse.ParsePosition;
+   import de.mjel.measure.unit.Unit;
+   import de.mjel.measure.unit.UnitFormat;
    
    [Abstract]
 
@@ -69,15 +69,15 @@ package measure {
 import flash.globalization.LocaleID;
 import flash.globalization.NumberFormatter;
 
-import measure.Measure;
-import measure.MeasureFormat;
-import measure.INumberFormat;
-import measure.parse.Appendable;
-import measure.parse.FieldPosition;
-import measure.parse.ParsePosition;
-import measure.unit.CompoundUnit;
-import measure.unit.Unit;
-import measure.unit.UnitFormat;
+import de.mjel.measure.Measure;
+import de.mjel.measure.MeasureFormat;
+import de.mjel.measure.INumberFormat;
+import de.mjel.measure.parse.Appendable;
+import de.mjel.measure.parse.FieldPosition;
+import de.mjel.measure.parse.ParsePosition;
+import de.mjel.measure.unit.CompoundUnit;
+import de.mjel.measure.unit.Unit;
+import de.mjel.measure.unit.UnitFormat;
 
 final class NumberUnit extends MeasureFormat {
    private var _numberFormat:INumberFormat;

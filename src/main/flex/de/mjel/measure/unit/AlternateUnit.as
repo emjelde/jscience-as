@@ -6,8 +6,8 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.unit {
-   import measure.converter.UnitConverter;
+package de.mjel.measure.unit {
+   import de.mjel.measure.converter.UnitConverter;
    
    /**
     * <p>This class represents the units used in expressions to distinguish

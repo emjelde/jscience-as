@@ -6,8 +6,8 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure {
-   import measure.parse.ParsePosition;
+package de.mjel.measure {
+   import de.mjel.measure.parse.ParsePosition;
 
    public interface INumberFormat {
       /**

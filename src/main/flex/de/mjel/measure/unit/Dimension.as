@@ -6,7 +6,7 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.unit {
+package de.mjel.measure.unit {
    /**
     * <p>This class represents the dimension of an unit. Two units <code>u1</code>
     *    and <code>u2</code> are compatible if and
@@ -161,12 +161,12 @@ package measure.unit {
    }
 }
 
-import measure.converter.RationalConverter;
-import measure.converter.UnitConverter;
-import measure.unit.BaseUnit;
-import measure.unit.Dimension;
-import measure.unit.IDimensionModel;
-import measure.unit.SI;
+import de.mjel.measure.converter.RationalConverter;
+import de.mjel.measure.converter.UnitConverter;
+import de.mjel.measure.unit.BaseUnit;
+import de.mjel.measure.unit.Dimension;
+import de.mjel.measure.unit.IDimensionModel;
+import de.mjel.measure.unit.SI;
 
 /**
  * Standard model (default).

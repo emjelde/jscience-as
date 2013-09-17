@@ -6,7 +6,7 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.converter {
+package de.mjel.measure.converter {
    /**
     * <p>This class represents a converter multiplying numeric values by an
     *    exact scaling factor (represented as the quotient of two 

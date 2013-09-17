@@ -6,7 +6,7 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.unit {
+package de.mjel.measure.unit {
    /**
     * This class represents a system of units, it groups units together
     * for historical or cultural reasons. Nothing prevents a unit from

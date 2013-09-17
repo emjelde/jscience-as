@@ -6,7 +6,7 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.converter {
+package de.mjel.measure.converter {
    /**
     * <p>This class represents a converter adding a constant offset 
     *    (approximated as a <code>double</code>) to numeric values.</p>

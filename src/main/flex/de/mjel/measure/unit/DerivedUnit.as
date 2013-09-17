@@ -6,14 +6,17 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure.converter {
+package de.mjel.measure.unit {
+   
+   [Abstract]
+   
    /**
-    * Signals that a problem of some sort has occurred either when creating a
-    * converter between two units or during the conversion itself.
+    * <p>This class identifies the units created by combining or transforming
+    *    other units.</p>
     */
-   public class ConversionError extends Error {
-      public function ConversionError(message:*="", id:*=0) {
-         super(message, id);
+   public class DerivedUnit extends Unit {
+      public function DerivedUnit() {
+         super();
       }
    }
 }

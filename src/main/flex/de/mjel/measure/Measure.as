@@ -6,9 +6,9 @@
  * Permission to use, copy, modify, and distribute this software is
  * freely granted, provided that this notice is preserved.
  */
-package measure {
-   import measure.unit.CompoundUnit;
-   import measure.unit.Unit;
+package de.mjel.measure {
+   import de.mjel.measure.unit.CompoundUnit;
+   import de.mjel.measure.unit.Unit;
    
    import mx.utils.ObjectUtil;
    
@@ -156,8 +156,8 @@ package measure {
    }
 }
 
-import measure.Measure;
-import measure.unit.Unit;
+import de.mjel.measure.Measure;
+import de.mjel.measure.unit.Unit;
 
 /**
  * Scalar implementation for <code>Number</code> values.
