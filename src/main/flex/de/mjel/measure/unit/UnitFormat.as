@@ -720,7 +720,7 @@ class DefaultFormat extends UnitFormat {
                isPowNegative = true;
             }
          }
-         else if (c.match(/[0-9]/).length > 0) {
+         else if ((parseInt(c) >= 0) && (parseInt(c) <= 9)) {
             if (isRoot) {
                root = root * 10 + parseInt(c);
             }
@@ -754,7 +754,7 @@ class DefaultFormat extends UnitFormat {
          if (c == "-") {
             isNegative = true;
          }
-         else if (c.match(/[0-9]/)) {
+         else if ((parseInt(c) >= 0) && (parseInt(c) <= 9)) {
             result = result * 10 + parseInt(c);
          }
          else {
