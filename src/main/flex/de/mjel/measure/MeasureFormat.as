@@ -68,6 +68,7 @@ package de.mjel.measure {
 
 import flash.globalization.LocaleID;
 import flash.globalization.NumberFormatter;
+import flash.globalization.NumberParseResult;
 
 import de.mjel.measure.Measure;
 import de.mjel.measure.MeasureFormat;
@@ -197,7 +198,7 @@ final class NumberUnit extends MeasureFormat {
 }
 
 final class NumberFormatImpl implements INumberFormat {
-   private var _delegate:NumberFormatter = new NumberFormatter(LocaleID.DEFAULT);
+   private const _delegate:NumberFormatter = new NumberFormatter(LocaleID.DEFAULT);
 
    public function NumberFormatImpl() {
       super();
@@ -208,9 +209,13 @@ final class NumberFormatImpl implements INumberFormat {
    }
 
    public function parse(source:String, pos:ParsePosition=null):Number {
-      var number:Number = parseFloat(source);
-      // TODO: FIXME this may be a bad way to get string length of number
-      pos.setIndex(pos.getIndex() + String(number).length);
-      return number;
+      if (source != null) {
+         const result:NumberParseResult = _delegate.parse(source);
+         if (!isNaN(result.value) && pos != null) {
+           pos.setIndex(pos.getIndex() + result.endIndex); 
+         }
+         return result.value;
+      }
+      return NaN;
    }
 }
