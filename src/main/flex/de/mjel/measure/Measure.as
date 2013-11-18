@@ -39,7 +39,6 @@ package de.mjel.measure {
        */
       public static function valueOf(value:*, unit:Unit=null):Measure {
          if (value is Number) {
-            var value:Number = value as Number;
             if (unit == null) {
                unit = Unit.ONE;
             }
