@@ -309,7 +309,7 @@ package de.mjel.measure.unit {
          var converter:UnitConverter = UnitConverter.IDENTITY;
          for (var i:int = 0; i < _elements.length; i++) {
             var cvtr:UnitConverter = _elements[i].unit.toStandardUnit();
-            if (!cvtr.isLinear) {
+            if (!cvtr.isLinear()) {
                throw new ConversionError(_elements[i].unit + " is non-linear, cannot convert");
             }
             if (_elements[i].root != 1) {

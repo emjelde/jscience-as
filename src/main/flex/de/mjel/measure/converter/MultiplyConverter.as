@@ -49,7 +49,7 @@ package de.mjel.measure.converter {
          return _factor * amount;
       }
       
-      override public function get isLinear():Boolean {
+      override public function isLinear():Boolean {
          return true;
       }
       

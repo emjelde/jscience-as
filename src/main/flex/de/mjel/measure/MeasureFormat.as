@@ -141,6 +141,7 @@ final class NumberUnit extends MeasureFormat {
       return toAppendTo;
    }
    
+   // TODO: return Measure?
    override public function parseObject(source:String, pos:ParsePosition=null):Object {
       if (pos == null) {
          pos = new ParsePosition(0);

@@ -37,9 +37,17 @@ package de.mjel.measure {
        * @param value the measurement value.
        * @param unit the measurement unit.
        */
-      public static function valueOf(value:*, unit:Unit):Measure {
-         var value:Number = Number(value);
-         return new MeasureNumber(value, unit);
+      public static function valueOf(value:*, unit:Unit=null):Measure {
+         if (value is Number) {
+            var value:Number = value as Number;
+            if (unit == null) {
+               unit = Unit.ONE;
+            }
+            return new MeasureNumber(value, unit);
+         }
+         else {
+            return MeasureFormat.getInstance().parseObject(String(value)) as Measure;
+         }
       }
       
       /**

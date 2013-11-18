@@ -47,7 +47,7 @@ package de.mjel.measure.converter {
          return amount + _offset;
       }
       
-      override public function get isLinear():Boolean {
+      override public function isLinear():Boolean {
          return false;
       }
       

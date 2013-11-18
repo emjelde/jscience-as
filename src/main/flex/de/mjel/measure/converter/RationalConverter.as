@@ -72,7 +72,7 @@ package de.mjel.measure.converter {
          return amount * _dividend / _divisor;
       }
       
-      override public function get isLinear():Boolean {
+      override public function isLinear():Boolean {
          return true;
       }
       

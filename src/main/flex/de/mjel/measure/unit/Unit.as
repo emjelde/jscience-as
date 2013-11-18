@@ -221,7 +221,7 @@ package de.mjel.measure.unit {
          for (var i:int = 0; i < productUnit.unitCount; i++) {
             var unit:Unit = productUnit.getUnit(i);
             var cvtr:UnitConverter = transformOf(unit);
-            if (!cvtr.isLinear) {
+            if (!cvtr.isLinear()) {
                throw new ConversionError(baseUnits + " is non-linear, cannot convert");
             }
             if (productUnit.getUnitRoot(i) != 1) {

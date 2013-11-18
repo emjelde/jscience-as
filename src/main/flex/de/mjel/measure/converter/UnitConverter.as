@@ -77,7 +77,7 @@ package de.mjel.measure.converter {
        *         <code>false</code> otherwise.
        */
       [Abstract]
-      public function get isLinear():Boolean {
+      public function isLinear():Boolean {
          return false;
       }
       
@@ -133,7 +133,7 @@ final class Identity extends UnitConverter {
       return value;
    }
    
-   override public function get isLinear():Boolean {
+   override public function isLinear():Boolean {
       return true;
    }
    
@@ -178,7 +178,7 @@ final class Compound extends UnitConverter {
       return _second.convert(_first.convert(value));
    }
    
-   override public function get isLinear():Boolean {
-      return _first.isLinear && _second.isLinear;
+   override public function isLinear():Boolean {
+      return _first.isLinear() && _second.isLinear();
    }
 }

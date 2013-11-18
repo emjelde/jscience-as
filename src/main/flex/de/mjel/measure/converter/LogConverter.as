@@ -57,7 +57,7 @@ package de.mjel.measure.converter {
          return _invLogBase * Math.log(amount);
       }
       
-      override public function get isLinear():Boolean {
+      override public function isLinear():Boolean {
          return false;
       }
    }
@@ -87,7 +87,7 @@ class Inverse extends UnitConverter {
       return Math.exp(_logBase * amount);
    }
    
-   override public function get isLinear():Boolean {
+   override public function isLinear():Boolean {
       return false;
    }
 }
