@@ -433,6 +433,16 @@ package de.mjel.measure.unit {
        * (standard name <code>ha</code>).
        */
       public static const HECTARE:Unit = nonSI(ARE.times(100)); // Exact.
+
+      /**
+       * A unit of area equal to <code>1 in²</code>
+       */
+      public static const SQUARE_INCH:Unit = nonSI(INCH.pow(2));
+
+      /**
+       * A unit of area equal to <code>1 ft²</code>
+       */
+      public static const SQUARE_FOOT:Unit = nonSI(FOOT.pow(2));
       
       /////////////////
       // Data Amount //
