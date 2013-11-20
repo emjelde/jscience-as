@@ -329,12 +329,14 @@ package de.mjel.measure.unit {
             return ProductUnit.getProductInstance(this, value as Unit);
          }
          else if (value is Number) {
-            if (Number(value) % 1 == 0) {
+            if (value % 1 == 0) {
                return transform(new RationalConverter(Number(value), 1));
             }
             return transform(new MultiplyConverter(Number(value)));
          }
-         throw new ArgumentError("Value not supported");
+         else {
+            throw new ArgumentError("Value not supported");
+         }
       }
       
       /**
@@ -361,12 +363,14 @@ package de.mjel.measure.unit {
             return this.times((value as Unit).inverse());
          }
          else if (value is Number) {
-            if (Number(value) % 1 == 0) {
+            if (value % 1 == 0) {
                return transform(new RationalConverter(1, Number(value)));
             }
             return transform(new MultiplyConverter(1.0 / Number(value)));
          }
-         throw new ArgumentError("Value not supported");
+         else {
+            throw new ArgumentError("Value not supported");
+         }
       }
       
       /**
