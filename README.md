@@ -6,8 +6,8 @@ This is a partial implementation of JScience for ActionScript.
 Supported
 ---------
 
-* Exact or arbitrary precision measurements.
-* Parse and format strings with units.<br>
+* Exact or estimated measurments with exact or arbitrary precision.
+* Parse and format strings with measurements and units.<br>
   Examples of valid entries (all for meters per second squared):
 
         m*s-2
@@ -18,11 +18,10 @@ Supported
 
 ### TODO
 
-* Amount
- * Economics
- * Geography
- * Mathematics
- * Physics
+* Economics
+* Geography
+* Mathematics
+* Physics
 
 Installation
 ------------
