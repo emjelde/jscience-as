@@ -721,12 +721,12 @@ class DefaultFormat extends UnitFormat {
                isPowNegative = true;
             }
          }
-         else if ((parseInt(c) >= 0) && (parseInt(c) <= 9)) {
+         else if ((c.charCodeAt() >= "0".charCodeAt()) && (c.charCodeAt() <= "9".charCodeAt())) {
             if (isRoot) {
-               root = root * 10 + parseInt(c);
+               root = root * 10 + (c.charCodeAt() - "0".charCodeAt());
             }
             else {
-               pow = pow * 10 + parseInt(c);
+               pow = pow * 10 + (c.charCodeAt() - "0".charCodeAt());
             }
          }
          else if (c == ":") {
@@ -755,8 +755,8 @@ class DefaultFormat extends UnitFormat {
          if (c == "-") {
             isNegative = true;
          }
-         else if ((parseInt(c) >= 0) && (parseInt(c) <= 9)) {
-            result = result * 10 + parseInt(c);
+         else if ((c.charCodeAt() >= "0".charCodeAt()) && (c.charCodeAt() <= "9".charCodeAt())) {
+            result = result * 10 + (c.charCodeAt() - "0".charCodeAt());
          }
          else {
             break;
