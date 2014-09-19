@@ -37,10 +37,10 @@ package de.mjel.measure {
        * @return the corresponding format.
        */
       public static function getInstance(numberFormat:INumberFormat=null, unitFormat:UnitFormat=null):MeasureFormat {
-         if (numberFormat && unitFormat) {
-            var measureFormat:MeasureFormat = new NumberUnit(numberFormat, unitFormat);
+         if (numberFormat != null && unitFormat != null) {
+            return new NumberUnit(numberFormat, unitFormat);
          }
-         if (!DEFAULT) {
+         if (DEFAULT == null) {
             DEFAULT = new NumberUnit(new NumberFormatImpl(), UnitFormat.getInstance());
          }
          return DEFAULT;
