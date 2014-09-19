@@ -353,7 +353,7 @@ package de.mjel.measure.unit {
          DEFAULT.label(NonSI.GALLON_DRY_US, "gallon_dry_us");
          DEFAULT.label(NonSI.GALLON_UK, "gallon_uk");
          DEFAULT.label(NonSI.OUNCE_LIQUID_UK, "oz_fl_uk");
-         DEFAULT.label(NonSI.MEASUREMENT_TON, "mTon");
+         DEFAULT.label(NonSI.MEASUREMENT_TON, "measurement_ton");
          DEFAULT.label(NonSI.ROENTGEN, "Roentgen");
 // TODO
 //         if (Locale.getDefault().getCountry().equals("GB")) {
