@@ -16,6 +16,7 @@ package de.mjel.measure.unit {
     * <p>Instances of this class are created through the <code>alternate(String)</code> method.</p>
     */
    final public class AlternateUnit extends DerivedUnit {
+
       /**
        * Holds the symbol.
        */
@@ -39,7 +40,6 @@ package de.mjel.measure.unit {
        *         associated to a different unit.
        */
       public function AlternateUnit(symbol:String, parent:Unit) {
-         super();
          if (!parent.isStandardUnit) {
             throw new ArgumentError(this + " is not a standard unit");
          }

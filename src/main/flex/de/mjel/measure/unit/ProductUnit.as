@@ -20,6 +20,7 @@ package de.mjel.measure.unit {
     *    <code>METER</code>.</p>
     */
    final public class ProductUnit extends DerivedUnit {
+
       /**
        * Holds the units composing this product unit.
        */

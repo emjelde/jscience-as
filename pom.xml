@@ -17,6 +17,7 @@
   
   <build>
     <sourceDirectory>src/main/flex</sourceDirectory>
+    <testSourceDirectory>src/test/flex</testSourceDirectory>
     <plugins>
       <plugin>
         <groupId>org.sonatype.flexmojos</groupId>
@@ -55,6 +56,13 @@
       <artifactId>flex-framework</artifactId>
       <version>${flex.version}</version>
       <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>com.adobe.flexunit</groupId>
+      <artifactId>flexunit</artifactId>
+      <version>4.0-rc-1</version>
+      <type>swc</type>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>de.mjel</groupId>

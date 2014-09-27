@@ -25,6 +25,7 @@ package de.mjel.measure.unit {
     *       UnitFormat.getStandardInstance().alias(CENTI(METER)), "centimetre");</pre></p>
     */
    final public class TransformedUnit extends DerivedUnit {
+
       /**
        * Holds the parent unit (not a transformed unit).
        */
@@ -44,7 +45,6 @@ package de.mjel.measure.unit {
        * @throws ArgumentError if <code>toParentUnit == UnitConverter.IDENTITY</code>
        */
       public function TransformedUnit(parentUnit:Unit, toParentUnit:UnitConverter) {
-         super();
          if (toParentUnit == UnitConverter.IDENTITY) {
             throw new ArgumentError("Identity not allowed");
          }
@@ -67,7 +67,7 @@ package de.mjel.measure.unit {
        *
        * @return the converter to the parent unit.
        */
-      public function toParentUnit():UnitConverter {
+      public function get toParentUnit():UnitConverter {
          return _toParentUnit;
       }
       
@@ -88,16 +88,16 @@ package de.mjel.measure.unit {
             return false;
          }
          var thatUnit:TransformedUnit = that as TransformedUnit; 
-         return this._parentUnit.equals(thatUnit._parentUnit) &&
-            this._toParentUnit.equals(thatUnit._toParentUnit);
+         return this.parentUnit.equals(thatUnit.parentUnit) &&
+            this.toParentUnit.equals(thatUnit.toParentUnit);
       }
       
       override public function get standardUnit():Unit {
-         return _parentUnit.standardUnit;
+         return parentUnit.standardUnit;
       }
       
       override public function toStandardUnit():UnitConverter {
-         return _parentUnit.toStandardUnit().concatenate(_toParentUnit);
+         return parentUnit.toStandardUnit().concatenate(toParentUnit);
       }
    }
 }

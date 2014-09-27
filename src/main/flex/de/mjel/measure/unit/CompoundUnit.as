@@ -19,6 +19,7 @@ package de.mjel.measure.unit {
     *    <pre></p>
     */
    final public class CompoundUnit extends DerivedUnit {
+
       /**
        * Holds the higher unit.
        */

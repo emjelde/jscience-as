@@ -7,12 +7,22 @@
  * freely granted, provided that this notice is preserved.
  */
 package de.mjel.measure.converter {
+
    /**
     * <p>This class represents a converter multiplying numeric values by an
-    *    exact scaling factor (represented as the quotient of two 
-    *    <code>long</code> numbers).</p>
+    *    exact scaling factor (represented as the quotient of two numbers).</p>
     */
    public final class RationalConverter extends UnitConverter {
+
+      /**
+       * Identity converter (unique).
+       *
+       * <p>This converter does nothing (<code>ONE.convert(x) == x</code>).</p>
+       */
+      public static function get IDENTITY():UnitConverter {
+         return UnitConverter.IDENTITY;
+      }
+
       /**
        * Holds the converter dividend.
        */
@@ -33,7 +43,6 @@ package de.mjel.measure.converter {
        * @throws IllegalArgumentException if <code>dividend == divisor</code>
        */
       public function RationalConverter(dividend:Number, divisor:Number) {
-         super();
          if (divisor < 0) {
             throw new ArgumentError("Negative divisor");
          }
@@ -62,20 +71,32 @@ package de.mjel.measure.converter {
          return _divisor;
       }
       
+      /**
+       * @inheritDoc
+       */
       override public function inverse():UnitConverter {
          return _dividend < 0
             ? new RationalConverter(-_divisor, -_dividend)
             : new RationalConverter( _divisor,  _dividend);
       }
       
+      /**
+       * @inheritDoc
+       */
       override public function convert(amount:Number):Number {
          return amount * _dividend / _divisor;
       }
       
+      /**
+       * @inheritDoc
+       */
       override public function isLinear():Boolean {
          return true;
       }
       
+      /**
+       * @inheritDoc
+       */
       override public function concatenate(converter:UnitConverter):UnitConverter {
          if (converter is RationalConverter) {
             var that:RationalConverter = converter as RationalConverter;
@@ -92,10 +113,11 @@ package de.mjel.measure.converter {
          }
       }
       
+      /**
+       * @private
+       */
       private static function valueOf(dividend:Number, divisor:Number):UnitConverter {
-         return (dividend == 1) && (divisor == 1)
-            ? UnitConverter.IDENTITY
-            : new RationalConverter(dividend, divisor);
+         return (dividend == 1) && (divisor == 1) ? IDENTITY : new RationalConverter(dividend, divisor);
       }
       
       /**

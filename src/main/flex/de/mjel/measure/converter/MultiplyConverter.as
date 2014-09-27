@@ -7,12 +7,23 @@
  * freely granted, provided that this notice is preserved.
  */
 package de.mjel.measure.converter {
+
    /**
     * <p>This class represents a converter multiplying numeric values by a 
     *    constant scaling factor (approximated as a <code>Number</code>). 
     *    For exact scaling conversions RationalConverter is preferred.</p>
     */
    public final class MultiplyConverter extends UnitConverter {
+
+      /**
+       * Identity converter (unique).
+       *
+       * <p>This converter does nothing (<code>ONE.convert(x) == x</code>).</p>
+       */
+      public static function get IDENTITY():UnitConverter {
+         return UnitConverter.IDENTITY;
+      }
+
       /**
        * Holds the scale factor.
        */
@@ -25,7 +36,6 @@ package de.mjel.measure.converter {
        * @throws IllegalArgumentException if offset is one (or close to one).
        */
       public function MultiplyConverter(factor:Number) {
-         super();
          if (factor == 1.0) {
             throw new ArgumentError("Identity converter not allowed");
          }
@@ -41,37 +51,52 @@ package de.mjel.measure.converter {
          return _factor;
       }
       
+      /**
+       * @inheritDoc
+       */
       override public function inverse():UnitConverter {
-         return new MultiplyConverter(1.0 / _factor);
+         return new MultiplyConverter(1.0 / factor);
       }
       
+      /**
+       * @inheritDoc
+       */
       override public function convert(amount:Number):Number {
-         return _factor * amount;
+         return factor * amount;
       }
       
+      /**
+       * @inheritDoc
+       */
       override public function isLinear():Boolean {
          return true;
       }
       
+      /**
+       * @inheritDoc
+       */
       override public function concatenate(converter:UnitConverter):UnitConverter {
-         var factor:Number;
+         var newFactor:Number;
          if (converter is MultiplyConverter) {
-            factor = _factor * (converter as MultiplyConverter)._factor;
-            return valueOf(factor);
+            newFactor = factor * (converter as MultiplyConverter).factor;
+            return valueOf(newFactor);
          }
          else if (converter is RationalConverter) {
-            factor = _factor
+            newFactor = factor
                * (converter as RationalConverter).dividend
                / (converter as RationalConverter).divisor;
-            return valueOf(factor);
+            return valueOf(newFactor);
          }
          else {
             return super.concatenate(converter);
          }
       }
       
+      /**
+       * @private
+       */
       private static function valueOf(factor:Number):UnitConverter {
-         return factor == 1.0 ? UnitConverter.IDENTITY : new MultiplyConverter(factor);
+         return factor == 1.0 ? IDENTITY : new MultiplyConverter(factor);
       }
    }
 }

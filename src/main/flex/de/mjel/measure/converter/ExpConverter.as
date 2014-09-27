@@ -9,14 +9,14 @@
 package de.mjel.measure.converter {
 
    /**
-    * <p>This class represents a logarithmic converter of limited precision.
-    *    Such converter is typically used to create logarithmic unit.
-    *    For example:<pre>
-    *    var BEL:Unit = Unit.ONE.transform(new LogConverter(10).inverse);
-    *    </pre></p>
+    * <p>This class represents a exponential converter of limited precision.
+    *    Such converter is used to create inverse of logarithmic unit.</p>
+    *
+    * <p>This class is internal, instances are created using the
+    *    <code>LogConverter.inverse()</code> method.</p>
     */
-   public final class LogConverter extends UnitConverter {
-      
+   internal final class ExpConverter extends UnitConverter {
+
       /**
        * Identity converter (unique).
        *
@@ -25,7 +25,7 @@ package de.mjel.measure.converter {
       public static function get IDENTITY():UnitConverter {
          return UnitConverter.IDENTITY;
       }
-
+      
       /**
        * Holds the logarithmic base.
        */
@@ -39,14 +39,14 @@ package de.mjel.measure.converter {
       /**
        * Creates a logarithmic converter having the specified base.
        * 
-       * @param base the logarithmic base (e.g. <code>Math.E</code> for
-       *        the Natural Logarithm).
+       * @param  base the logarithmic base (e.g. <code>Math.E</code> for
+       *         the Natural Logarithm).
        */
-      public function LogConverter(base:Number) {
+      public function ExpConverter(base:Number) {
          _base = base;
          _logOfBase = Math.log(base);
       }
-      
+ 
       /**
        * Returns the logarithmic base of this converter.
        */
@@ -58,14 +58,14 @@ package de.mjel.measure.converter {
        * @inheritDoc
        */
       override public function inverse():UnitConverter {
-         return new ExpConverter(base);
+         return new LogConverter(base);
       }
       
       /**
        * @inheritDoc
        */
       override public function convert(amount:Number):Number {
-         return Math.log(amount) / _logOfBase;
+         return Math.exp(_logOfBase * amount);
       }
       
       /**
@@ -79,10 +79,10 @@ package de.mjel.measure.converter {
        * @inheritDoc
        */
       override public function equals(converter:Object):Boolean {
-         if (!(converter is LogConverter))
+         if (!(converter is ExpConverter))
             return false;
 
-         var that:LogConverter = converter as LogConverter;
+         var that:ExpConverter = converter as ExpConverter;
          return this.base == that.base;
       }
    }

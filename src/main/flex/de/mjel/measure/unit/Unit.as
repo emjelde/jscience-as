@@ -84,7 +84,6 @@ package de.mjel.measure.unit {
          return null;
       }
       
-      
       /**
        * Returns the converter from this unit to its system unit.
        * 
@@ -290,7 +289,7 @@ package de.mjel.measure.unit {
          if (this is TransformedUnit) {
             var tf:TransformedUnit = this as TransformedUnit;
             var parent:Unit = tf.parentUnit;
-            var toParent:UnitConverter = tf.toParentUnit().concatenate(operation);
+            var toParent:UnitConverter = tf.toParentUnit.concatenate(operation);
             if (toParent == UnitConverter.IDENTITY) {
                return parent;
             }
@@ -311,6 +310,9 @@ package de.mjel.measure.unit {
        * @return <code>this.transform(new AddConverter(offset))</code>
        */
       final public function plus(offset:Number):Unit {
+         if (offset == 0) {
+            return this;
+         }
          return transform(new AddConverter(offset));
       }
       
@@ -329,7 +331,10 @@ package de.mjel.measure.unit {
             return ProductUnit.getProductInstance(this, value as Unit);
          }
          else if (value is Number) {
-            if (value % 1 == 0) {
+            if (value == 1) {
+               return this;
+            }
+            else if (value % 1 == 0) {
                return transform(new RationalConverter(Number(value), 1));
             }
             return transform(new MultiplyConverter(Number(value)));
@@ -363,7 +368,10 @@ package de.mjel.measure.unit {
             return this.times((value as Unit).inverse());
          }
          else if (value is Number) {
-            if (value % 1 == 0) {
+            if (value == 1) {
+               return this;
+            }
+            else if (value % 1 == 0) {
                return transform(new RationalConverter(1, Number(value)));
             }
             return transform(new MultiplyConverter(1.0 / Number(value)));

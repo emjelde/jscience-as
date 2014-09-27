@@ -16,7 +16,7 @@ package de.mjel.measure.unit {
       /**
        * Holds the current physical model.
        */
-      private static var _CurrentModel:IDimensionModel;
+      private static var _currentModel:IDimensionModel;
       
       /**
        * Holds dimensionless.
@@ -61,7 +61,7 @@ package de.mjel.measure.unit {
       /**
        * Creates a new dimension associated to the specified pseudo-unit or symbol.
        */
-      public function Dimension(value:*):void {
+      public function Dimension(value:Object):void {
          super();
          if (value is Unit) {
             _pseudoUnit = value as Unit;
@@ -136,11 +136,11 @@ package de.mjel.measure.unit {
          return (that is Dimension) && _pseudoUnit.equals((that as Dimension)._pseudoUnit);
       }
       
-      private static function get CurrentModel():IDimensionModel {
-         if (!_CurrentModel) {
-            _CurrentModel = new Model();
+      private static function get currentModel():IDimensionModel {
+         if (!_currentModel) {
+            _currentModel = new Model();
          }
-         return _CurrentModel;
+         return _currentModel;
       }
       
       /**
@@ -149,14 +149,14 @@ package de.mjel.measure.unit {
        * @param model the new model to be used when calculating unit dimensions.
        */
       public static function set model(value:IDimensionModel):void {
-         Dimension._CurrentModel = value;
+         Dimension._currentModel = value;
       }
       
       /**
        * Returns the model used to determinate the units dimensions.
        */
       public static function get model():IDimensionModel {
-         return Dimension.CurrentModel;
+         return Dimension.currentModel;
       }
    }
 }

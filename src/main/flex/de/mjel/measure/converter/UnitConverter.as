@@ -20,6 +20,7 @@ package de.mjel.measure.converter {
     *    converter, then the unique <code>IDENTITY</code> instance should be returned.</p>
     */
    public class UnitConverter {
+
       /**
        * Holds the identity converter (unique). This converter does nothing
        * (<code>ONE.convert(x) == x</code>).
@@ -31,7 +32,9 @@ package de.mjel.measure.converter {
       }
       
       /**
-       * Identity converter (unique). This converter does nothing (<code>ONE.convert(x) == x</code>).
+       * Identity converter (unique).
+       *
+       * <p>This converter does nothing (<code>ONE.convert(x) == x</code>).</p>
        */
       public static function get IDENTITY():UnitConverter {
          if (!_IDENTITY) {
