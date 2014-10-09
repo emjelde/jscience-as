@@ -181,12 +181,12 @@ package de.mjel.measure.unit {
        *      cannot be parsed.
        */
       final public function parseObject(source:String, pos:ParsePosition):Unit {
-         var start:int = pos.getIndex();
+         var start:int = pos.index;
          try {
             return parseProductUnit(source, pos);
          }
          catch (e:Error) {
-            pos.setIndex(start);
+            pos.index = start;
 // TODO: Event for error offset
 //            pos.setErrorIndex(e.getErrorOffset());
          }
@@ -503,7 +503,7 @@ class DefaultFormat extends UnitFormat {
    // Parsing.
 
    override public function parseSingleUnit(value:String, pos:ParsePosition):Unit {
-      var startIndex:int = pos.getIndex();
+      var startIndex:int = pos.index;
       var name:String = readIdentifier(value, pos);
       var unit:Unit = unitFor(name);
       check(unit != null, name + " not recognized", value, startIndex);
@@ -518,11 +518,11 @@ class DefaultFormat extends UnitFormat {
             result = parseSingleUnit(value, pos);
             break;
          case OPEN_PAREN:
-            pos.setIndex(pos.getIndex() + 1);
+            pos.index = pos.index + 1;
             result = parseProductUnit(value, pos);
             token = nextToken(value, pos);
-            check(token == CLOSE_PAREN, "')' expected", value, pos.getIndex());
-            pos.setIndex(pos.getIndex() + 1);
+            check(token == CLOSE_PAREN, "')' expected", value, pos.index);
+            pos.index = pos.index + 1;
             break;
       }
       token = nextToken(value, pos);
@@ -540,7 +540,7 @@ class DefaultFormat extends UnitFormat {
                }   
                break;
             case MULTIPLY:
-               pos.setIndex(pos.getIndex() + 1);
+               pos.index = pos.index + 1;
                token = nextToken(value, pos);
                if (token == INTEGER) {
                   n = readInteger(value, pos);
@@ -559,7 +559,7 @@ class DefaultFormat extends UnitFormat {
                }
                break;
             case DIVIDE:
-               pos.setIndex(pos.getIndex() + 1);
+               pos.index = pos.index + 1;
                token = nextToken(value, pos);
                if (token == INTEGER) {
                   n = readInteger(value, pos);
@@ -578,7 +578,7 @@ class DefaultFormat extends UnitFormat {
                }
                break;
             case PLUS:
-               pos.setIndex(pos.getIndex() + 1);
+               pos.index = pos.index + 1;
                token = nextToken(value, pos);
                if (token == INTEGER) {
                   n = readInteger(value, pos);
@@ -593,14 +593,14 @@ class DefaultFormat extends UnitFormat {
                   }
                }
                else {
-                  throw new Error("not a number", pos.getIndex());
+                  throw new Error("not a number", pos.index);
                }
                break;
             case EOF:
             case CLOSE_PAREN:
                return result;
             default:
-               throw new Error("unexpected token " + token, pos.getIndex());
+               throw new Error("unexpected token " + token, pos.index);
          }
          token = nextToken(value, pos);
       }
@@ -621,8 +621,8 @@ class DefaultFormat extends UnitFormat {
 
    private function nextToken(value:String, pos:ParsePosition):int {
       var length:int = value.length;
-      while (pos.getIndex() < length) {
-         var c:String = value.charAt(pos.getIndex());
+      while (pos.index < length) {
+         var c:String = value.charAt(pos.index);
          if (isUnitIdentifierPart(c)) {
             return IDENTIFIER;
          }
@@ -636,7 +636,7 @@ class DefaultFormat extends UnitFormat {
             return EXPONENT;
          }
          else if (c == "*") {
-            var c2:String = value.charAt(pos.getIndex() + 1);
+            var c2:String = value.charAt(pos.index + 1);
             if (c2 == "*") {
                return EXPONENT;
             } else {
@@ -653,7 +653,7 @@ class DefaultFormat extends UnitFormat {
             return PLUS;
          }
          else if ((c == "-") || isDigit(c)) {
-            var index:int = pos.getIndex() + 1;
+            var index:int = pos.index + 1;
             while ((index < length) && (isDigit(c) || (c == "-") || (c == ".") || (c == "E"))) {
                c = value.charAt(index++);
                if (c == ".") {
@@ -662,7 +662,7 @@ class DefaultFormat extends UnitFormat {
             }
             return INTEGER;
          }
-         pos.setIndex(pos.getIndex() + 1);
+         pos.index = pos.index + 1;
       }
       return EOF;
    }
@@ -674,12 +674,12 @@ class DefaultFormat extends UnitFormat {
    }
 
    private function readExponent(value:String, pos:ParsePosition):Exponent {
-      var c:String = value.charAt(pos.getIndex());
+      var c:String = value.charAt(pos.index);
       if (c == "^") {
-         pos.setIndex(pos.getIndex()+1);
+         pos.index = pos.index + 1;
       }
       else if (c == "*") {
-         pos.setIndex(pos.getIndex()+2);
+         pos.index = pos.index + 2;
       }
       const length:int = value.length;
       var pow:int = 0;
@@ -687,8 +687,8 @@ class DefaultFormat extends UnitFormat {
       var root:int = 0;
       var isRootNegative:Boolean = false;
       var isRoot:Boolean = false;
-      while (pos.getIndex() < length) {
-         c = value.charAt(pos.getIndex());
+      while (pos.index < length) {
+         c = value.charAt(pos.index);
          if (c == "¹") {
             if (isRoot) {
                root = root * 10 + 1;
@@ -721,12 +721,12 @@ class DefaultFormat extends UnitFormat {
                isPowNegative = true;
             }
          }
-         else if ((parseInt(c) >= 0) && (parseInt(c) <= 9)) {
+         else if ((c.charCodeAt() >= "0".charCodeAt()) && (c.charCodeAt() <= "9".charCodeAt())) {
             if (isRoot) {
-               root = root * 10 + parseInt(c);
+               root = root * 10 + (c.charCodeAt() - "0".charCodeAt());
             }
             else {
-               pow = pow * 10 + parseInt(c);
+               pow = pow * 10 + (c.charCodeAt() - "0".charCodeAt());
             }
          }
          else if (c == ":") {
@@ -735,7 +735,7 @@ class DefaultFormat extends UnitFormat {
          else {
             break;
          }
-         pos.setIndex(pos.getIndex()+1);
+         pos.index = pos.index + 1;
       }
       if (pow == 0) {
          pow = 1;
@@ -750,25 +750,25 @@ class DefaultFormat extends UnitFormat {
       var length:int = value.length;
       var result:int = 0;
       var isNegative:Boolean = false;
-      while (pos.getIndex() < length) {
-         var c:String = value.charAt(pos.getIndex());
+      while (pos.index < length) {
+         var c:String = value.charAt(pos.index);
          if (c == "-") {
             isNegative = true;
          }
-         else if ((parseInt(c) >= 0) && (parseInt(c) <= 9)) {
-            result = result * 10 + parseInt(c);
+         else if ((c.charCodeAt() >= "0".charCodeAt()) && (c.charCodeAt() <= "9".charCodeAt())) {
+            result = result * 10 + (c.charCodeAt() - "0".charCodeAt());
          }
          else {
             break;
          }
-         pos.setIndex(pos.getIndex()+1);
+         pos.index = pos.index + 1;
       }
       return isNegative ? -result : result;
    }
 
    private function readNumber(value:String, pos:ParsePosition):Number {
       var length:int = value.length;
-      var start:int = pos.getIndex();
+      var start:int = pos.index;
       var end:int = start + 1;
       while (end < length) {
          if ("012356789+-.E".indexOf(value.charAt(end)) < 0) {
@@ -776,18 +776,18 @@ class DefaultFormat extends UnitFormat {
          }
          end += 1;
       }
-      pos.setIndex(end+1);
+      pos.index = end+1;
       return Number(value.substring(start, end));
    }
 
    private function readIdentifier(value:String, pos:ParsePosition):String {
       var length:int = value.length;
-      var start:int = pos.getIndex();
+      var start:int = pos.index;
       var i:int = start;
       while ((++i < length) && isUnitIdentifierPart(value.charAt(i))) { 
          // continue
       }
-      pos.setIndex(i);
+      pos.index = i;
       return value.substring(start, i);
    }
 

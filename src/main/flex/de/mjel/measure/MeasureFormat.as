@@ -146,15 +146,15 @@ final class NumberUnit extends MeasureFormat {
       if (pos == null) {
          pos = new ParsePosition(0);
       }
-      var start:int = pos.getIndex();
+      var start:int = pos.index;
 // TODO: See below
 //      try {
       var i:int = start;
       var value:Number = _numberFormat.parse(source, pos);
-      if (i == pos.getIndex()) {
+      if (i == pos.index) {
          return null; // Cannot parse.
       }
-      i = pos.getIndex();
+      i = pos.index;
       if (i >= source.length) {
          return measureOf(value, Unit.ONE); // No unit.
       }
@@ -165,13 +165,13 @@ final class NumberUnit extends MeasureFormat {
       if (++i >= source.length) {
          return measureOf(value, Unit.ONE); // No unit.
       }
-      pos.setIndex(i); // Skips separator.
+      pos.index = i; // Skips separator.
       var unit:Unit = _unitFormat.parseProductUnit(source, pos);
       return measureOf(value, unit);
 // TODO: Handle error
 //      }
 //      catch (ParseException e) {
-//         pos.setIndex(start);
+//         pos.index = start;
 //         pos.setErrorIndex(e.getErrorOffset());
 //         return null;
 //      }
@@ -179,7 +179,7 @@ final class NumberUnit extends MeasureFormat {
    
    private function parseCompound(highValue:Number, source:String, pos:ParsePosition):Object {
       var high:Unit = _unitFormat.parseSingleUnit(source, pos);
-      var i:int = pos.getIndex();
+      var i:int = pos.index;
       if (i >= source.length || isWhitespace(source.charAt(i))) {
          return measureOf(highValue, high);
       }
@@ -213,7 +213,7 @@ final class NumberFormatImpl implements INumberFormat {
       if (source != null) {
          const result:NumberParseResult = _delegate.parse(source);
          if (!isNaN(result.value) && pos != null) {
-           pos.setIndex(pos.getIndex() + result.endIndex); 
+           pos.index = pos.index + result.endIndex;
          }
          return result.value;
       }

@@ -18,7 +18,7 @@ package de.mjel.measure.parse {
        */
       public function Appendable(init:Object=null) {
          super();
-         if (init) {
+         if (init != null) {
             _internal = String(init);
          }
       }
@@ -26,13 +26,13 @@ package de.mjel.measure.parse {
       /**
        * Appends the specified String to this <code>Appendable</code>.
        *
-       * @param s The String from which a subsequence will be appended.
+       * @param s The String from which a substring will be appended.
        * @param start The index of the first character in the subsequence.
        * @param end The index of the character following the last character in the
        *            subsequence.
        */
-      public function append(s:String, start:int=0, end:int=0x7fffffff):Appendable {
-         _internal = _internal.concat(String(s).substring(start, end));
+      public function append(value:*, start:int=0, end:int=0x7fffffff):Appendable {
+         _internal = _internal.concat(String(value).substring(start, end));
          return this;
       }
 

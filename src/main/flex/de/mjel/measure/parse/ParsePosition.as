@@ -24,19 +24,19 @@ package de.mjel.measure.parse {
          _index = index;
       }
 
-      public function getIndex():int {
+      public function get index():int {
          return _index;
       }
 
-      public function setIndex(value:int):void {
+      public function set index(value:int):void {
          _index = value;
       }
 
-      public function getErrorIndex():int {
+      public function get errorIndex():int {
          return _errorIndex;
       }
 
-      public function setErrorIndex(value:int):void {
+      public function set errorIndex(value:int):void {
          _errorIndex = value;
       }
 
