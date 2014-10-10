@@ -64,7 +64,11 @@ package de.mjel.measure.unit {
          var format:DefaultFormat = new DefaultFormat();
          assertFalse(format.isValidIdentifier(null));
          assertFalse(format.isValidIdentifier(""));
-         assertFalse(format.isValidIdentifier("0123456789.*/()[]¹²³^+-"));
+         for each (var c:String in ["0","1","2","3","4","5","6","7","8",
+                                    "9","·","*","/","(",")","[","]","¹",
+                                    "²","³","^","+","-"]) {
+            assertFalse(c + " is not a falid identifier",format.isValidIdentifier(c));
+         }
          assertTrue(format.isValidIdentifier("abcdefghijklmnopqrstuvwxyz"));
       }
 
