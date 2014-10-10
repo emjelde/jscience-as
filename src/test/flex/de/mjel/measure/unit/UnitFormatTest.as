@@ -94,7 +94,7 @@ package de.mjel.measure.unit {
          assertEquals(Unit.ONE, format.parseSingleUnit(label, new ParsePosition(0)));
       }
 
-      [Test(expected="ArgumentError")]
+      [Test(expected="de.mjel.measure.parse.ParseError")]
       public function invalidParseSingleUnit():void {
          var label:String = "ONE";
          var format:DefaultFormat = new DefaultFormat();  

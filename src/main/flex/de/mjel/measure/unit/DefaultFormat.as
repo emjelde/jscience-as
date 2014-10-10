@@ -12,6 +12,7 @@ package de.mjel.measure.unit {
    import de.mjel.measure.converter.RationalConverter;
    import de.mjel.measure.converter.UnitConverter;
    import de.mjel.measure.parse.Appendable;
+   import de.mjel.measure.parse.ParseError;
    import de.mjel.measure.parse.ParsePosition;
 
    import flash.utils.Dictionary;
@@ -229,14 +230,14 @@ package de.mjel.measure.unit {
                      }
                   }
                   else {
-                     throw new Error("not a number", pos.index);
+                     throw new ParseError("not a number", pos.index);
                   }
                   break;
                case EOF:
                case CLOSE_PAREN:
                   return result;
                default:
-                  throw new Error("unexpected token " + token, pos.index);
+                  throw new ParseError("unexpected token " + token, pos.index);
             }
             token = nextToken(value, pos);
          }
@@ -305,7 +306,7 @@ package de.mjel.measure.unit {
 
       private function check(expr:Boolean, message:String, value:String, index:int):void {
          if (!expr) {
-            throw new ArgumentError(message + " (in " + value + " at index " + index + ")", index);
+            throw new ParseError(message + " (in " + value + " at index " + index + ")", index);
          }
       }
 

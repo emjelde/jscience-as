@@ -12,6 +12,7 @@ package de.mjel.measure.unit {
    import de.mjel.measure.converter.RationalConverter;
    import de.mjel.measure.converter.UnitConverter;
    import de.mjel.measure.parse.Appendable;
+   import de.mjel.measure.parse.ParseError;
    import de.mjel.measure.parse.ParsePosition;
 
    [Abstract]
@@ -116,7 +117,7 @@ package de.mjel.measure.unit {
        * @param value the <code>String</code> to parse.
        * @param pos an object holding the parsing index and error position.
        * @return an <code>Unit</code> parsed from the character sequence.
-       * @throws Error if the character sequence does not contain a valid unit identifier.
+       * @throws ArgumentError if the character sequence does not contain a valid unit identifier.
        */
       [Abstract]
       public function parseSingleUnit(value:String, pos:ParsePosition):Unit {
@@ -136,7 +137,7 @@ package de.mjel.measure.unit {
        * 
        * @param unit the unit being labelled. 
        * @param label the new label for this unit.
-       * @throws Error if the label is not a <code>isValidIdentifier(String)</code>
+       * @throws ArgumentError if the label is not a <code>isValidIdentifier(String)</code>
        valid identifier.
        */
       [Abstract]
@@ -194,10 +195,9 @@ package de.mjel.measure.unit {
          try {
             return parseProductUnit(source, pos);
          }
-         catch (e:Error) {
+         catch (e:ParseError) {
             pos.index = start;
-// TODO: Event for error offset
-//            pos.setErrorIndex(e.getErrorOffset());
+            pos.errorIndex = e.errorOffset;
          }
          return null;
       }

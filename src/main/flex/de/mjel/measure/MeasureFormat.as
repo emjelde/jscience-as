@@ -60,7 +60,7 @@ package de.mjel.measure {
       }
 
       [Abstract]
-      public function parseObject(source:String, pos:ParsePosition=null):Object {
+      public function parseObject(source:String, pos:ParsePosition=null):Measure {
          return null;
       }
    }
@@ -75,6 +75,7 @@ import de.mjel.measure.MeasureFormat;
 import de.mjel.measure.INumberFormat;
 import de.mjel.measure.parse.Appendable;
 import de.mjel.measure.parse.FieldPosition;
+import de.mjel.measure.parse.ParseError;
 import de.mjel.measure.parse.ParsePosition;
 import de.mjel.measure.unit.CompoundUnit;
 import de.mjel.measure.unit.Unit;
@@ -141,43 +142,40 @@ final class NumberUnit extends MeasureFormat {
       return toAppendTo;
    }
    
-   // TODO: return Measure?
-   override public function parseObject(source:String, pos:ParsePosition=null):Object {
+   override public function parseObject(source:String, pos:ParsePosition=null):Measure {
       if (pos == null) {
          pos = new ParsePosition(0);
       }
       var start:int = pos.index;
-// TODO: See below
-//      try {
-      var i:int = start;
-      var value:Number = _numberFormat.parse(source, pos);
-      if (i == pos.index) {
-         return null; // Cannot parse.
+      try {
+         var i:int = start;
+         var value:Number = _numberFormat.parse(source, pos);
+         if (i == pos.index) {
+            return null; // Cannot parse.
+         }
+         i = pos.index;
+         if (i >= source.length) {
+            return measureOf(value, Unit.ONE); // No unit.
+         }
+         var isCompound:Boolean = !isWhitespace(source.charAt(i));
+         if (isCompound) {
+            return parseCompound(value, source, pos);
+         }
+         if (++i >= source.length) {
+            return measureOf(value, Unit.ONE); // No unit.
+         }
+         pos.index = i; // Skips separator.
+         var unit:Unit = _unitFormat.parseProductUnit(source, pos);
+         return measureOf(value, unit);
       }
-      i = pos.index;
-      if (i >= source.length) {
-         return measureOf(value, Unit.ONE); // No unit.
+      catch (e:ParseError) {
+         pos.index = start;
+         pos.errorIndex = e.errorOffset;
       }
-      var isCompound:Boolean = !isWhitespace(source.charAt(i));
-      if (isCompound) {
-         return parseCompound(value, source, pos);
-      }
-      if (++i >= source.length) {
-         return measureOf(value, Unit.ONE); // No unit.
-      }
-      pos.index = i; // Skips separator.
-      var unit:Unit = _unitFormat.parseProductUnit(source, pos);
-      return measureOf(value, unit);
-// TODO: Handle error
-//      }
-//      catch (ParseException e) {
-//         pos.index = start;
-//         pos.setErrorIndex(e.getErrorOffset());
-//         return null;
-//      }
+      return null;
    }
    
-   private function parseCompound(highValue:Number, source:String, pos:ParsePosition):Object {
+   private function parseCompound(highValue:Number, source:String, pos:ParsePosition):Measure {
       var high:Unit = _unitFormat.parseSingleUnit(source, pos);
       var i:int = pos.index;
       if (i >= source.length || isWhitespace(source.charAt(i))) {
