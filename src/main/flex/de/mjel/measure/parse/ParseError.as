@@ -7,19 +7,30 @@
  * freely granted, provided that this notice is preserved.
  */
 package de.mjel.measure.parse {
+
    /**
-    * Signals that a problem of some sort has occurred either when creating a
-    * converter between two units or during the conversion itself.
+    * Signals that an error has been reached unexpectedly while parsing.
     */
    public class ParseError extends Error {
 
       private var _errorOffset:int = -1;
 
+      /**
+       * Constructs a ParseError with the specified detail message and offset.
+       * A detail message is a String that describes this particular exception. 
+       *
+       * @param message the detail message.
+       * @param errorOffset the position where the error is found while parsing
+       * @param id contains the reference number associated with the specific error message.
+       */
       public function ParseError(message:*="", errorOffset:int=-1, id:*=0) {
          super(message, id);
          _errorOffset = errorOffset;
       }
 
+      /**
+       * Returns the position where the error was found.
+       */
       public function get errorOffset():int {
          return errorOffset;
       }

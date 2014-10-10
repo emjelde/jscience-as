@@ -67,7 +67,7 @@ package de.mjel.measure.unit {
          for each (var c:String in ["0","1","2","3","4","5","6","7","8",
                                     "9","·","*","/","(",")","[","]","¹",
                                     "²","³","^","+","-"]) {
-            assertFalse(c + " is not a falid identifier",format.isValidIdentifier(c));
+            assertFalse(c + " is not a valid identifier",format.isValidIdentifier(c));
          }
          assertTrue(format.isValidIdentifier("abcdefghijklmnopqrstuvwxyz"));
       }
