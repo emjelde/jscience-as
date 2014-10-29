@@ -45,7 +45,7 @@ package de.mjel.measure {
             return new MeasureNumber(value, unit);
          }
          else {
-            return MeasureFormat.getInstance().parseObject(String(value)) as Measure;
+            return MeasureFormat.getInstance().parseObject(String(value));
          }
       }
       

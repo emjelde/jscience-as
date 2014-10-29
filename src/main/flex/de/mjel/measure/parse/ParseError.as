@@ -32,7 +32,7 @@ package de.mjel.measure.parse {
        * Returns the position where the error was found.
        */
       public function get errorOffset():int {
-         return errorOffset;
+         return _errorOffset;
       }
    }
 }
